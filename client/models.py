@@ -1,6 +1,6 @@
 from django.db import models
 
-from mailing.models import NULLABLE
+NULLABLE = {'blank': True, 'null': True}
 
 
 class Client(models.Model):

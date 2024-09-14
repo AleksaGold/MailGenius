@@ -1,6 +1,23 @@
 from django.db import models
 
+from client.models import Client
+
 NULLABLE = {'blank': True, 'null': True}
+
+
+class Message(models.Model):
+    """
+    Сообщение для рассылки
+    """
+    subject = models.CharField(max_length=250, verbose_name='тема письма')
+    body = models.TextField(verbose_name='тело письма')
+
+    def __str__(self):
+        return f'Тема письма: {self.subject}'
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
 
 
 class MailingSettings(models.Model):
@@ -17,9 +34,8 @@ class MailingSettings(models.Model):
     status = models.CharField(max_length=20, default='created', verbose_name='Статус рассылки')
     # completed, created, launched
 
-    message = models.ManyToManyField('Message', verbose_name='Сообщение')
-
-    clients = models.ManyToManyField('Client', verbose_name='Клиенты')
+    clients = models.ManyToManyField('client.Client', verbose_name='клиенты', related_name='clients')
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='сообщение', **NULLABLE)
 
     def __str__(self):
         return f'Дата начала: {self.start_from} Периодичность: {self.frequency} Статус рассылки: {self.status}'
@@ -27,23 +43,6 @@ class MailingSettings(models.Model):
     class Meta:
         verbose_name = 'Настройка рассылки'
         verbose_name_plural = 'Настройки рассылок'
-
-
-class Message(models.Model):
-    """
-    Сообщение для рассылки
-    """
-    subject = models.CharField(max_length=250, verbose_name='тема письма')
-    body = models.TextField(verbose_name='тело письма')
-
-    settings = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='настройки')
-
-    def __str__(self):
-        return f'Тема письма: {self.subject}'
-
-    class Meta:
-        verbose_name = 'Сообщение'
-        verbose_name_plural = 'Сообщения'
 
 
 class Log(models.Model):
@@ -54,7 +53,7 @@ class Log(models.Model):
     status = models.BooleanField(default=False, verbose_name='статус попытки')
     response = models.TextField(default='Ответ не получен', verbose_name='ответ почтового сервера')
 
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='сообщение для рассылки')
+ #   settings = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='настройки')
 
     def __str__(self):
         return f' Попытка: {self.pk} Статус попытки отправки: {self.status}'
