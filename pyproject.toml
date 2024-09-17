@@ -10,6 +10,8 @@ python = "^3.12"
 django = "^5.1.1"
 psycopg2-binary = "^2.9.9"
 certifi = "^2024.8.30"
+django-crontab = "^0.7.1"
+ipython = "^8.27.0"
 
 
 [build-system]

@@ -22,7 +22,7 @@ class MailingSettingsCreateView(CreateView):
 
     def form_valid(self, form):
         obj = form.save()
-        send_message_email(obj)
+        # send_message_email(obj)
         return super().form_valid(form)
 
 
