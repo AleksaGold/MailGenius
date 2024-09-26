@@ -8,7 +8,7 @@ from mailing.services import send_message_email
 
 
 class IndexView(TemplateView):
-    template_name = 'mailing/index.html'
+    template_name = "mailing/index.html"
 
 
 class MailingSettingsListView(ListView):
@@ -18,16 +18,15 @@ class MailingSettingsListView(ListView):
 class MailingSettingsCreateView(CreateView):
     model = MailingSettings
     form_class = MailingSettingsForm
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy("mailing:index")
 
     def form_valid(self, form):
         obj = form.save()
-        # send_message_email(obj)
+        send_message_email(obj)
         return super().form_valid(form)
 
 
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy('mailing:index')
-
+    success_url = reverse_lazy("mailing:index")

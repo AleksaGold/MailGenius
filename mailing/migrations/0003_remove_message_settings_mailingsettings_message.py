@@ -7,17 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mailing', '0002_message_settings_alter_mailingsettings_clients'),
+        ("mailing", "0002_message_settings_alter_mailingsettings_clients"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='message',
-            name='settings',
+            model_name="message",
+            name="settings",
         ),
         migrations.AddField(
-            model_name='mailingsettings',
-            name='message',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='mailing.message', verbose_name='сообщение'),
+            model_name="mailingsettings",
+            name="message",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="mailing.message",
+                verbose_name="сообщение",
+            ),
         ),
     ]

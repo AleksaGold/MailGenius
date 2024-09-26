@@ -8,47 +8,116 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('client', '0001_initial'),
+        ("client", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Log',
+            name="Log",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='дата и время попытки')),
-                ('status', models.BooleanField(default=False, verbose_name='статус попытки')),
-                ('response', models.TextField(default='Ответ не получен', verbose_name='ответ почтового сервера')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="дата и время попытки"
+                    ),
+                ),
+                (
+                    "status",
+                    models.BooleanField(default=False, verbose_name="статус попытки"),
+                ),
+                (
+                    "response",
+                    models.TextField(
+                        default="Ответ не получен",
+                        verbose_name="ответ почтового сервера",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Лог',
-                'verbose_name_plural': 'Логи',
+                "verbose_name": "Лог",
+                "verbose_name_plural": "Логи",
             },
         ),
         migrations.CreateModel(
-            name='Message',
+            name="Message",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(max_length=250, verbose_name='тема письма')),
-                ('body', models.TextField(verbose_name='тело письма')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "subject",
+                    models.CharField(max_length=250, verbose_name="тема письма"),
+                ),
+                ("body", models.TextField(verbose_name="тело письма")),
             ],
             options={
-                'verbose_name': 'Сообщение',
-                'verbose_name_plural': 'Сообщения',
+                "verbose_name": "Сообщение",
+                "verbose_name_plural": "Сообщения",
             },
         ),
         migrations.CreateModel(
-            name='MailingSettings',
+            name="MailingSettings",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start_from', models.DateTimeField(verbose_name='Дата и время начала рассылки')),
-                ('frequency', models.CharField(choices=[('OD', 'Раз в день'), ('OW', 'Раз в неделю'), ('OM', 'Раз в месяц')], max_length=2, verbose_name='Периодичность')),
-                ('status', models.CharField(default='created', max_length=20, verbose_name='Статус рассылки')),
-                ('clients', models.ManyToManyField(blank=True, null=True, related_name='clients', to='client.client', verbose_name='клиенты')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "start_from",
+                    models.DateTimeField(verbose_name="Дата и время начала рассылки"),
+                ),
+                (
+                    "frequency",
+                    models.CharField(
+                        choices=[
+                            ("OD", "Раз в день"),
+                            ("OW", "Раз в неделю"),
+                            ("OM", "Раз в месяц"),
+                        ],
+                        max_length=2,
+                        verbose_name="Периодичность",
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        default="created", max_length=20, verbose_name="Статус рассылки"
+                    ),
+                ),
+                (
+                    "clients",
+                    models.ManyToManyField(
+                        blank=True,
+                        null=True,
+                        related_name="clients",
+                        to="client.client",
+                        verbose_name="клиенты",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Настройка рассылки',
-                'verbose_name_plural': 'Настройки рассылок',
+                "verbose_name": "Настройка рассылки",
+                "verbose_name_plural": "Настройки рассылок",
             },
         ),
     ]

@@ -7,23 +7,38 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Client',
+            name="Client",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('last_name', models.CharField(max_length=50, verbose_name='Фамилия')),
-                ('first_name', models.CharField(max_length=50, verbose_name='Имя')),
-                ('patronymic', models.CharField(blank=True, max_length=50, null=True, verbose_name='Отчество')),
-                ('email', models.EmailField(max_length=100, verbose_name='Почта')),
-                ('comment', models.TextField(blank=True, null=True, verbose_name='Комментарий')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("last_name", models.CharField(max_length=50, verbose_name="Фамилия")),
+                ("first_name", models.CharField(max_length=50, verbose_name="Имя")),
+                (
+                    "patronymic",
+                    models.CharField(
+                        blank=True, max_length=50, null=True, verbose_name="Отчество"
+                    ),
+                ),
+                ("email", models.EmailField(max_length=100, verbose_name="Почта")),
+                (
+                    "comment",
+                    models.TextField(blank=True, null=True, verbose_name="Комментарий"),
+                ),
             ],
             options={
-                'verbose_name': 'Клиент',
-                'verbose_name_plural': 'Клиенты',
+                "verbose_name": "Клиент",
+                "verbose_name_plural": "Клиенты",
             },
         ),
     ]

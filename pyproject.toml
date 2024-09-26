@@ -12,6 +12,9 @@ psycopg2-binary = "^2.9.9"
 certifi = "^2024.8.30"
 django-crontab = "^0.7.1"
 ipython = "^8.27.0"
+black = "^24.8.0"
+django-crispy-forms = "^2.3"
+crispy-bootstrap5 = "^2024.2"
 
 
 [build-system]
