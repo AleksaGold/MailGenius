@@ -50,13 +50,22 @@ class MailingSettings(models.Model):
         auto_now=False, verbose_name="Дата и время начала рассылки"
     )
 
-    next_sending = models.DateTimeField(auto_now=False, verbose_name="Дата рассылки", **NULLABLE)
+    next_sending = models.DateTimeField(
+        auto_now=False, verbose_name="Дата рассылки", **NULLABLE
+    )
+
+    end_on = models.DateTimeField(
+        auto_now=False, verbose_name="Дата и время окончания рассылки", **NULLABLE
+    )
 
     frequency = models.CharField(
         max_length=2, choices=FREQUENCY_CHOICES, verbose_name="Периодичность"
     )
     status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default="created", verbose_name="Статус рассылки"
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="created",
+        verbose_name="Статус рассылки",
     )
 
     clients = models.ManyToManyField(
@@ -67,8 +76,10 @@ class MailingSettings(models.Model):
     )
 
     def __str__(self):
-        return (f"Дата начала: {self.start_from} Периодичность: {self.frequency} Статус рассылки: {self.status} "
-                f"Дата следующей рассылки: {self.next_sending}")
+        return (
+            f"Дата начала: {self.start_from} Периодичность: {self.frequency} Статус рассылки: {self.status} "
+            f"Дата следующей рассылки: {self.next_sending}"
+        )
 
     class Meta:
         verbose_name = "Настройка рассылки"

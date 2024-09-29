@@ -7,6 +7,7 @@ from django import forms
 
 class StyleFormMixin:
     """Миксин для стилизации формы"""
+
     pass
 
     # def __init__(self, *args, **kwargs):
@@ -26,8 +27,12 @@ class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
         model = MailingSettings
         fields = "__all__"
 
-        widgets = {"start_from": forms.DateInput(attrs={"type": "datetime-local"}),
-                   "clients": forms.CheckboxSelectMultiple,}
+        widgets = {
+            "start_from": forms.DateInput(attrs={"type": "datetime-local"}),
+            "end_on": forms.DateInput(attrs={"type": "datetime-local"}),
+            "clients": forms.CheckboxSelectMultiple,
+            "next_sending": forms.HiddenInput(),
+        }
 
 
 class MessageForm(StyleFormMixin, forms.ModelForm):

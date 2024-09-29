@@ -27,11 +27,11 @@ class MailingSettingsCreateView(CreateView):
     def form_valid(self, form):
         obj: MailingSettings = form.save()
         if obj.frequency == "OD":
-            obj.next_sending = obj.start_from + timedelta(days=1)
+            obj.next_sending = CURRENT_TIME + timedelta(days=1)
         elif obj.frequency == "OW":
-            obj.next_sending = obj.start_from + timedelta(days=7)
+            obj.next_sending = CURRENT_TIME + timedelta(days=7)
         else:
-            obj.next_sending = obj.start_from + timedelta(days=30)
+            obj.next_sending = CURRENT_TIME + timedelta(days=30)
         obj.save()
         if obj.start_from <= CURRENT_TIME:
             send_message_email(obj)
