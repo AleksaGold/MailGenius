@@ -97,8 +97,7 @@ class Log(models.Model):
     response = models.TextField(
         default="Ответ не получен", verbose_name="ответ почтового сервера"
     )
-
-    mailing_id = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='настройки')
+    mailing_id = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name="id_рассылки")
 
     def __str__(self):
         return f" Попытка: {self.pk} Статус попытки отправки: {self.status}"

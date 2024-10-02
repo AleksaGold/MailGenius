@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailing.models import MailingSettings, Message
+from mailing.models import MailingSettings, Message, Log
 
 
 @admin.register(MailingSettings)
@@ -22,4 +22,13 @@ class MessageAdmin(admin.ModelAdmin):
         "pk",
         "subject",
         "body",
+    )
+
+
+@admin.register(Log)
+class LogAdmin(admin.ModelAdmin):
+    list_display = (
+        "created_at",
+        "status",
+        "response",
     )
