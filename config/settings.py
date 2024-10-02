@@ -130,6 +130,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
-CRONJOBS = [
-    ("*/2 * * * *", "client.cron.add_client"),
-]
+# CRONJOBS = [("* * * * *", "mailing.cron.get_mails_to_send")]
+CRONJOBS = [("* * * * *", "python manage.py mailing start_mailing")]
+
