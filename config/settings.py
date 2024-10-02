@@ -132,4 +132,3 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 # CRONJOBS = [("* * * * *", "mailing.cron.get_mails_to_send")]
 CRONJOBS = [("* * * * *", "python manage.py mailing start_mailing")]
-

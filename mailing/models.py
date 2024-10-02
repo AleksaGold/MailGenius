@@ -1,4 +1,3 @@
-import datetime
 
 from django.db import models
 
@@ -51,7 +50,7 @@ class MailingSettings(models.Model):
     )
 
     next_sending = models.DateTimeField(
-        auto_now=False, verbose_name="Дата рассылки", **NULLABLE
+        auto_now=False, verbose_name="Дата следующей рассылки", **NULLABLE
     )
 
     end_on = models.DateTimeField(
@@ -99,7 +98,7 @@ class Log(models.Model):
         default="Ответ не получен", verbose_name="ответ почтового сервера"
     )
 
-    #   settings = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='настройки')
+    mailing_id = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='настройки')
 
     def __str__(self):
         return f" Попытка: {self.pk} Статус попытки отправки: {self.status}"
