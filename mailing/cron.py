@@ -1,4 +1,4 @@
-from mailing.models import MailingSettings
+from mailing.models import MailingSettings, Log
 from mailing.services import send_message_email
 from datetime import timedelta
 from django.utils import timezone
@@ -7,8 +7,8 @@ CURRENT_TIME = timezone.now()
 
 
 def get_mails_to_send():
-    """"""
-    all_mails = MailingSettings.objects.all()
+    """Функция реализует отправку рассылки, в соответствии с датой и статусом рассылки"""
+    all_mails = MailingSettings.objects.exclude(status="completed")
 
     for mail in all_mails:
         if mail.end_on <= CURRENT_TIME:
