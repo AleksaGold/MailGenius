@@ -25,9 +25,10 @@ class IndexView(TemplateView):
 class MailingSettingsCreateView(CreateView):
     model = MailingSettings
     form_class = MailingSettingsForm
-    success_url = reverse_lazy("mailing:index")
+    success_url = reverse_lazy("mailing:mailing_list")
 
     def form_valid(self, form):
+        """Валидация формы и установка даты следующей отправки сообщения"""
         new_mailing_settings: MailingSettings = form.save()
         if new_mailing_settings.start_from <= CURRENT_TIME:
             send_message_email(new_mailing_settings)
@@ -55,18 +56,18 @@ class MailingSettingsListView(ListView):
 class MailingSettingsUpdateView(UpdateView):
     model = MailingSettings
     form_class = MailingSettingsForm
-    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+    success_url = reverse_lazy("mailing:mailing_list")
 
 
 class MailingSettingsDeleteView(DeleteView):
     model = MailingSettings
-    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+    success_url = reverse_lazy("mailing:mailing_list")
 
 
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+    success_url = reverse_lazy("mailing:message_list")  # изменить ссылку
 
 
 class MessageDetailView(DetailView):
@@ -80,9 +81,9 @@ class MessageListView(ListView):
 class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+    success_url = reverse_lazy("mailing:message_list")  # изменить ссылку
 
 
 class MessageDeleteView(DeleteView):
     model = Message
-    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+    success_url = reverse_lazy("mailing:message_list")  # изменить ссылку

@@ -7,6 +7,7 @@ from mailing.models import MailingSettings, Log
 
 
 def send_message_email(mailingsettings_item: MailingSettings):
+    """Функция отправки и записи логов отправки сообщения"""
     try:
         clients = mailingsettings_item.clients.all()
         send_mail(

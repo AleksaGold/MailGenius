@@ -28,7 +28,7 @@
       </div>
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
-          <h2>Сообщение</h2>
+          <h2>Сообщения</h2>
           <p>В этом разделе вы можете создавать новые сообщения и управлять сообщениями созданными ранее.</p>
           <a href="{% url 'mailing:message_create' %}" class="btn btn-outline-secondary" type="button">
             Создать сообщение
@@ -41,8 +41,13 @@
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>Клиенты</h2>
-          <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
-          <button class="btn btn-outline-secondary" type="button">Example button</button>
+          <p>Здесь вы можете создавать новых клиентов для рассылки и редактировать клиентов внесенных в нашу базу данных.</p>
+          <a href="{% url 'client:client_create' %}" class="btn btn-outline-secondary" type="button">
+            Создать нового клиента
+          </a>
+          <a href="{% url 'client:client_list' %}" class="btn btn-outline-secondary" type="button">
+            Просмотреть всех клиентов
+          </a>
         </div>
       </div>
       <div class="col-md-6">

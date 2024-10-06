@@ -8,15 +8,18 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            Удалить рассылку
+                            Удалить клиента
                         </h3>
                         <div class="card-body">
                             {{ form | crispy }}
                             <form method="post">
                                 {% csrf_token %}
-                                <p>Хотите удалить рассылку: {{ object.pk }} ?</p>
+                                <p> Хотите удалить клиента: {{ object.last_name }} {{ object.first_name }}
+                                {% if object.patronymic %}
+                                {{ object.patronymic }}
+                                {% endif %}?</p>
                                 <button type="submit" class="btn btn-danger">Удалить</button>
-                                <a href="{% url 'mailing:message_list' %}" class="btn btn-secondary">Отмена</a>
+                                <a href="{% url 'client:client_list' %}" class="btn btn-secondary">Отмена</a>
                             </form>
                         </div>
                     </div>
