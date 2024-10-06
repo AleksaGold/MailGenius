@@ -2,22 +2,32 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-6">
             <form class="row" method="post" enctype="multipart/form-data">
                 <div class="card">
-                    <div class="card-body">
-                        {% csrf_token %}
-                        {{ form | crispy }}
-<!--                        {{ form.as_p }}-->
-                    </div>
-                     <button type="submit" class="btn btn-secondary btn-sm">
+                    <div class="card-header">
                         {% if object %}
-                        Сохранить
+                        <h3 class="card-title">
+                            Редактировать настройки рассылки
+                        </h3>
                         {% else %}
-                        Создать
+                        <h3 class="card-title">
+                            Создать новую рассылку
+                        </h3>
                         {% endif %}
-                    </button>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-sm  mb-2">
+                            {% if object %}
+                            Сохранить
+                            {% else %}
+                            Создать
+                            {% endif %}
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

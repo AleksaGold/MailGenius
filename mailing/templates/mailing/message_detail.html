@@ -1,0 +1,34 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row mt-4 mb-2">
+        <div class="col-6">
+            <form class="row" enctype="multipart/form-data">
+                <div class="card">
+                    {{ form | crispy }}
+                    <div class="card-header">
+                        <h3 class="card-title">Подробнее о письме: {{ object.subject }} </h3>
+                        <div class="card-body">
+                            <p class="card-text"> ID: {{ object.pk }} </p>
+                            <p class="card-text"> Тема письма: {{ object.subject }} </p>
+                            <p class="card-text"> Тело письма: {{ object.body }} </p>
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'mailing:message_update' object.pk %}" role="button">Редактировать
+                                    сообщение</a>
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'mailing:message_delete' object.pk %}" role="button">Удалить
+                                    сообщение</a>
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'mailing:index' %}" role="button">Вернуться на главную страницу</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

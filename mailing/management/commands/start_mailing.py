@@ -19,9 +19,9 @@ class Command(BaseCommand):
             else:
                 if mail.next_sending <= CURRENT_TIME and mail.status != "completed":
                     send_message_email(mail)
-                    if mail.frequency == "OD":
+                    if mail.frequency == "daily":
                         mail.next_sending += timedelta(minutes=2)
-                    elif mail.frequency == "OW":
+                    elif mail.frequency == "weekly":
                         mail.next_sending += timedelta(days=7)
                     else:
                         mail.next_sending += timedelta(days=30)

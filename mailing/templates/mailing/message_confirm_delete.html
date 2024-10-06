@@ -1,0 +1,28 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="col-12">
+        <div class="row mt-4 mb-2">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            Удалить сообщение
+                        </h3>
+                        <div class="card-body">
+                            {{ form | crispy }}
+                            <form method="post">
+                                {% csrf_token %}
+                                <p>Хотите удалить сообщение: {{ object.subject }} ?</p>
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                                <a href="{% url 'mailing:message_list' %}" class="btn btn-secondary">Отмена</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,7 +2,14 @@ from datetime import timedelta
 from django.utils import timezone
 
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, CreateView
+from django.views.generic import (
+    ListView,
+    TemplateView,
+    CreateView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+)
 
 from mailing.forms import MailingSettingsForm, MessageForm
 from mailing.models import MailingSettings, Message
@@ -15,10 +22,6 @@ class IndexView(TemplateView):
     template_name = "mailing/index.html"
 
 
-class MailingSettingsListView(ListView):
-    model = MailingSettings
-
-
 class MailingSettingsCreateView(CreateView):
     model = MailingSettings
     form_class = MailingSettingsForm
@@ -26,20 +29,60 @@ class MailingSettingsCreateView(CreateView):
 
     def form_valid(self, form):
         new_mailing_settings: MailingSettings = form.save()
-        new_mailing_settings.status = "launched"
-        if new_mailing_settings.frequency == "OD":
-            new_mailing_settings.next_sending = CURRENT_TIME + timedelta(days=1)
-        elif new_mailing_settings.frequency == "OW":
-            new_mailing_settings.next_sending = CURRENT_TIME + timedelta(days=7)
-        else:
-            new_mailing_settings.next_sending = CURRENT_TIME + timedelta(days=30)
-        new_mailing_settings.save()
         if new_mailing_settings.start_from <= CURRENT_TIME:
             send_message_email(new_mailing_settings)
+            if new_mailing_settings.frequency == "daily":
+                new_mailing_settings.next_sending = CURRENT_TIME + timedelta(days=1)
+            elif new_mailing_settings.frequency == "weekly":
+                new_mailing_settings.next_sending = CURRENT_TIME + timedelta(days=7)
+            else:
+                new_mailing_settings.next_sending = CURRENT_TIME + timedelta(days=30)
+        else:
+            new_mailing_settings.next_sending = new_mailing_settings.start_from
+        new_mailing_settings.save()
+
         return super().form_valid(form)
+
+
+class MailingSettingsDetailView(DetailView):
+    model = MailingSettings
+
+
+class MailingSettingsListView(ListView):
+    model = MailingSettings
+
+
+class MailingSettingsUpdateView(UpdateView):
+    model = MailingSettings
+    form_class = MailingSettingsForm
+    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+
+
+class MailingSettingsDeleteView(DeleteView):
+    model = MailingSettings
+    success_url = reverse_lazy("mailing:index")  # изменить ссылку
 
 
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy("mailing:index")
+    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+
+
+class MessageDetailView(DetailView):
+    model = Message
+
+
+class MessageListView(ListView):
+    model = Message
+
+
+class MessageUpdateView(UpdateView):
+    model = Message
+    form_class = MessageForm
+    success_url = reverse_lazy("mailing:index")  # изменить ссылку
+
+
+class MessageDeleteView(DeleteView):
+    model = Message
+    success_url = reverse_lazy("mailing:index")  # изменить ссылку

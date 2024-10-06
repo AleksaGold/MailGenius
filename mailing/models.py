@@ -26,9 +26,9 @@ class MailingSettings(models.Model):
     Настройки рассылки
     """
 
-    ONCE_A_DAY = "OD"
-    ONCE_A_WEEK = "OW"
-    ONCE_A_MONTH = "OM"
+    ONCE_A_DAY = "daily"
+    ONCE_A_WEEK = "weekly"
+    ONCE_A_MONTH = "monthly"
     FREQUENCY_CHOICES = [
         (ONCE_A_DAY, "Раз в день"),
         (ONCE_A_WEEK, "Раз в неделю"),
@@ -37,11 +37,9 @@ class MailingSettings(models.Model):
 
     COMPLETED = "completed"
     CREATED = "created"
-    LAUNCHED = "launched"
     STATUS_CHOICES = [
         (COMPLETED, "Завершена"),
         (CREATED, "Создана"),
-        (LAUNCHED, "Запущена"),
     ]
 
     start_from = models.DateTimeField(
@@ -57,7 +55,7 @@ class MailingSettings(models.Model):
     )
 
     frequency = models.CharField(
-        max_length=2, choices=FREQUENCY_CHOICES, verbose_name="Периодичность"
+        max_length=10, choices=FREQUENCY_CHOICES, verbose_name="Периодичность"
     )
     status = models.CharField(
         max_length=20,

@@ -9,14 +9,12 @@
             <div class="row g-0 border rounded overflow-hidden mt-4 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
                 <form class="col p-4 d-flex flex-column position-static">
                     {{ form | crispy }}
-                    <h4 class="card-text"> ID Рассылки: {{ object.pk }} </h4>
-                    <p class="card-text"> Дата и время начала рассылки: {{ object.start_from }} </p>
-                    <p class="card-text"> Статус рассылки: {{ object.get_status_display }} </p>
-                    <p class="card-text"> Периодичность рассылки: {{ object.get_frequency_display }} </p>
+                    <h4 class="card-text"> Тема письма: {{ object.subject }} </h4>
+                    <p class="card-text"> Тело письма: {{ object.body | truncatechars:100 }} </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a class="btn btn-sm btn-outline-secondary"
-                               href="{% url 'mailing:mailing_detail' object.pk %}" role="button">Подробнее</a>
+                               href="{% url 'mailing:message_detail' object.pk %}" role="button">Подробнее</a>
                         </div>
                     </div>
                 </form>

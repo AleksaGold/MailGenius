@@ -1,0 +1,43 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row mt-4 mb-2">
+        <div class="col-6">
+            <form class="row" enctype="multipart/form-data">
+                <div class="card">
+                    {{ form | crispy }}
+                    <div class="card-header">
+                        <h3 class="card-title">Подробнее о рассылке: {{ object.pk }} </h3>
+                        <div class="card-body">
+                            <p class="card-text"> Дата и время начала рассылки: {{ object.start_from }} </p>
+                            {% if object.status == "created" %}
+                            <p class="card-text"> Дата следующей рассылки: {{ object.next_sending }} </p>
+                            {% endif %}
+                            <p class="card-text"> Дата и время окончания рассылки: {{ object.end_on }} </p>
+                            <p class="card-text"> Периодичность рассылки: {{ object.get_frequency_display }} </p>
+                            <p class="card-text"> Статус рассылки: {{ object.get_status_display }} </p>
+                            <p class="card-text"> Клиенты рассылки:
+                                {% for client in object.clients.all %}
+                                {{ client.email }}
+                                {% endfor %} </p>
+                            <p class="card-text"> Тема письма для рассылки: {{ object.message.subject }} </p>
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'mailing:mailing_update' object.pk %}" role="button">Редактировать
+                                    настройки рассылки</a>
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'mailing:mailing_delete' object.pk %}" role="button">Удалить
+                                    рассылку</a>
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="{% url 'mailing:index' %}" role="button">Вернуться на главную страницу</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
