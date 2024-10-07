@@ -1,7 +1,7 @@
 from django.forms import BooleanField, ModelMultipleChoiceField
 
 
-from mailing.models import MailingSettings, Message
+from mailing.models import MailingSettings, Message, Log
 from django import forms
 
 
@@ -38,4 +38,10 @@ class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
 class MessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Message
+        fields = "__all__"
+
+
+class LogForm(forms.ModelForm):
+    class Meta:
+        model = Log
         fields = "__all__"

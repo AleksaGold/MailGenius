@@ -12,7 +12,7 @@ from django.views.generic import (
 )
 
 from mailing.forms import MailingSettingsForm, MessageForm
-from mailing.models import MailingSettings, Message
+from mailing.models import MailingSettings, Message, Log
 from mailing.services import send_message_email
 
 CURRENT_TIME = timezone.now()
@@ -67,7 +67,7 @@ class MailingSettingsDeleteView(DeleteView):
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy("mailing:message_list")  # изменить ссылку
+    success_url = reverse_lazy("mailing:message_list")
 
 
 class MessageDetailView(DetailView):
@@ -81,9 +81,15 @@ class MessageListView(ListView):
 class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy("mailing:message_list")  # изменить ссылку
+    success_url = reverse_lazy("mailing:message_list")
 
 
 class MessageDeleteView(DeleteView):
     model = Message
-    success_url = reverse_lazy("mailing:message_list")  # изменить ссылку
+    success_url = reverse_lazy("mailing:message_list")
+
+
+class LogListView(ListView):
+    model = Log
+    paginate_by = 9
+    ordering = ["-created_at"]

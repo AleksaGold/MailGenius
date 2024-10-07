@@ -1,0 +1,24 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="row align-items-md-stretch">
+    {% for object in object_list %}
+    <div class="col-md-4">
+        <div class="container">
+            <div class="row g-0 border rounded overflow-hidden mt-4 position-relative">
+                <form class="col p-4 d-flex flex-column position-static">
+                    {{ form | crispy }}
+                    <h4 class="card-text"> ID Лога: {{ object.pk }} </h4>
+                    <p class="card-text"> ID Рассылки: {{ object.mailing_id.pk }} </p>
+                    <p class="card-text"> Дата и время попытки: {{ object.created_at }} </p>
+                    <p class="card-text"> Ответ почтового сервера: {{ object.response }} </p>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
