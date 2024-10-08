@@ -1,6 +1,7 @@
 from datetime import timedelta
 
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.utils import timezone
 
 from django.urls import reverse_lazy
@@ -24,14 +25,18 @@ class IndexView(TemplateView):
     template_name = "mailing/index.html"
 
 
-class MailingSettingsCreateView(CreateView):
+class MailingSettingsCreateView(CreateView, LoginRequiredMixin):
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
 
     def form_valid(self, form):
-        """Валидация формы и установка даты следующей отправки сообщения"""
+        """Валидация формы, установка даты следующей отправки сообщения и автоматическая привязка пользователя"""
         new_mailing_settings: MailingSettings = form.save()
+
+        user = self.request.user
+        new_mailing_settings.owner = user
+
         if new_mailing_settings.start_from <= CURRENT_TIME:
             send_message_email(new_mailing_settings)
             if new_mailing_settings.frequency == "daily":
@@ -66,10 +71,19 @@ class MailingSettingsDeleteView(DeleteView):
     success_url = reverse_lazy("mailing:mailing_list")
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(CreateView, LoginRequiredMixin):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
+
+    def form_valid(self, form):
+        """Валидация формы и автоматическая привязка пользователя"""
+        message = form.save()
+        user = self.request.user
+        message.owner = user
+        message.save()
+
+        return super().form_valid(form)
 
 
 class MessageDetailView(DetailView):

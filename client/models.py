@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -11,6 +13,8 @@ class Client(models.Model):
     email = models.EmailField(max_length=100, verbose_name="Почта")
 
     comment = models.TextField(verbose_name="Комментарий", **NULLABLE)
+
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE)
 
     def __str__(self):
         return f"{self.last_name} {self.first_name} ({self.email})"

@@ -1,6 +1,7 @@
 from django.db import models
 
 from client.models import Client
+from users.models import User
 
 NULLABLE = {"blank": True, "null": True}
 
@@ -12,6 +13,8 @@ class Message(models.Model):
 
     subject = models.CharField(max_length=250, verbose_name="тема письма")
     body = models.TextField(verbose_name="тело письма")
+
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE)
 
     def __str__(self):
         return f"Тема письма: {self.subject}"
@@ -71,6 +74,8 @@ class MailingSettings(models.Model):
     message = models.ForeignKey(
         Message, on_delete=models.CASCADE, verbose_name="сообщение", **NULLABLE
     )
+
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE, related_name="user")
 
     def __str__(self):
         return (

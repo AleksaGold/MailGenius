@@ -25,7 +25,7 @@ class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = MailingSettings
-        fields = "__all__"
+        exclude = ("owner",)
 
         widgets = {
             "start_from": forms.DateInput(attrs={"type": "datetime-local"}),
@@ -38,7 +38,7 @@ class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
 class MessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Message
-        fields = "__all__"
+        exclude = ("owner",)
 
 
 class LogForm(forms.ModelForm):
