@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "client",
     "crispy_forms",
     "crispy_bootstrap5",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,8 @@ SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
 CRONJOBS = [("* * * * *", "mailing.cron.get_mails_to_send")]
+
+AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
