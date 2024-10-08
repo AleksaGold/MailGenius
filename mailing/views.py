@@ -98,7 +98,7 @@ class LogListView(ListView):
 
 
 def mailing_log_list(request, pk):
-    """Контроллер для просмотра логов одной рассылки"""
+    """Функция для просмотра логов одной рассылки"""
     logs = Log.objects.filter(mailing_id=pk)
     context = {"logs": logs}
     return render(request, "mailing/mailing_log_list.html", context)
