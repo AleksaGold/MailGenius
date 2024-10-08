@@ -58,6 +58,8 @@ class MailingSettingsDetailView(DetailView):
 
 class MailingSettingsListView(ListView):
     model = MailingSettings
+    paginate_by = 9
+    ordering = ["id"]
 
 
 class MailingSettingsUpdateView(UpdateView):
@@ -92,6 +94,8 @@ class MessageDetailView(DetailView):
 
 class MessageListView(ListView):
     model = Message
+    paginate_by = 9
+    ordering = ["subject"]
 
 
 class MessageUpdateView(UpdateView):

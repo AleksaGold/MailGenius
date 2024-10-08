@@ -1,5 +1,4 @@
 {% load static %}
-<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -37,42 +36,55 @@
 <header>
     {% include 'mailing/includes/inc_menu.html' %}
 </header>
+<div class="container py-4">
 
-<main>
 
-    {% block content %}
-    {% endblock %}
-
-    {% if page_obj.has_other_pages %}
-    <nav class="list-pages">
-        <ul>
-            {% for p in paginator.page_range %}
-            {% if page_obj.number == p %}
-            <li class="page-num page-num-selected">{{ p }}</li>
-            {% else %}
-            <li class="page-num">
-                <a href="?page={{ p }}">{{ p }}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-    </nav>
-    {% endif %}
-
-</main>
-
-<footer class="text-muted py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="{% url 'mailing:index' %}">Вернуться на главную страницу</a>
-        </p>
-        <p class="mb-1">&copy; {% now 'o' %}</p>
+    <div class="p-3 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-15">
+            <h1 class="display-10 fw-bold text-center">MailGenius</h1>
+            <p class="col-md-12 fs-5 text-center"> Наш сервис управления рассылками — это мощный инструмент, который
+                поможет вам эффективно и просто взаимодействовать с вашей аудиторией. С его помощью вы сможете
+                создавать, отправлять и анализировать рассылки, повышая вовлеченность и лояльность клиентов.</p>
+            <center>
+                <a href="{% url 'mailing:index' %}" class="btn btn-outline-secondary">Вернуться на главную страницу</a>
+                <a href="#" class="btn btn-outline-secondary">Перейти в блог</a>
+            </center>
+        </div>
     </div>
-</footer>
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+        {% if page_obj.has_other_pages %}
+        <nav class="list-pages">
+            <ul>
+                {% for p in paginator.page_range %}
+                {% if page_obj.number == p %}
+                <li class="page-num page-num-selected">{{ p }}</li>
+                {% else %}
+                <li class="page-num">
+                    <a href="?page={{ p }}">{{ p }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+        {% endif %}
+
+    </main>
+
+    <footer class="text-muted py-5">
+        <div class="container">
+            <p class="float-end mb-1">
+                <a href="{% url 'mailing:index' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Вернуться на главную страницу</a>
+            </p>
+            <p class="mb-1">&copy; {% now 'o' %}</p>
+        </div>
+    </footer>
 
 
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
 </body>
 </html>

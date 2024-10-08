@@ -33,6 +33,8 @@ class ClientDetailView(DetailView):
 
 class ClientListView(ListView):
     model = Client
+    paginate_by = 9
+    ordering = ["last_name"]
 
 
 class ClientUpdateView(UpdateView):

@@ -14,16 +14,12 @@
                             <p class="card-text"> ID: {{ object.pk }} </p>
                             <p class="card-text"> Тема письма: {{ object.subject }} </p>
                             <p class="card-text"> Тело письма: {{ object.body }} </p>
-                            <div class="btn-group">
                                 <a class="btn btn-sm btn-outline-secondary"
                                    href="{% url 'mailing:message_update' object.pk %}" role="button">Редактировать
                                     сообщение</a>
                                 <a class="btn btn-sm btn-outline-secondary"
                                    href="{% url 'mailing:message_delete' object.pk %}" role="button">Удалить
                                     сообщение</a>
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{% url 'mailing:index' %}" role="button">Вернуться на главную страницу</a>
-                            </div>
                         </div>
                     </div>
                 </div>

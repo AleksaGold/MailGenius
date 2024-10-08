@@ -2,11 +2,10 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">Сервис</h4>
+          <h4 class="text-white">MailGenius</h4>
           <p class="text-muted">Сервис управления рассылками</p>
         </div>
         <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Меню</h4>
            <ul class="list-unstyled">
             <{% if user.is_authenticated %}
             <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
@@ -14,8 +13,6 @@
             <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
                <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
             {% endif %}
-            <li><a href="#" class="text-white">Главная страница</a></li>
-            <li><a href="#" class="text-white">Блог</a></li>
           </ul>
         </div>
       </div>

@@ -20,16 +20,12 @@
                                 {% if object.comment %}
                                 {{ object.comment | truncatechars:100 }}
                                 {% endif %} </p>
-                            <div class="btn-group">
                                 <a class="btn btn-sm btn-outline-secondary"
                                    href="{% url 'client:client_update' object.pk %}" role="button">Редактировать
                                     клиента</a>
                                 <a class="btn btn-sm btn-outline-secondary"
                                    href="{% url 'client:client_delete' object.pk %}" role="button">Удалить
                                     клиента</a>
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{% url 'mailing:index' %}" role="button">Вернуться на главную страницу</a>
-                            </div>
                         </div>
                     </div>
                 </div>
