@@ -18,9 +18,9 @@ def send_message_email(mailingsettings_item: MailingSettings):
             fail_silently=False,
         )
         Log.objects.create(
-            status=True, response="Рассылка прошла успешно", mailing_id=mailingsettings_item
+            status=True,
+            response="Рассылка прошла успешно",
+            mailing=mailingsettings_item,
         )
     except smtplib.SMTPException as e:
-        Log.objects.create(
-            status=False, response=str(e), mailing_id=mailingsettings_item
-        )
+        Log.objects.create(status=False, response=str(e), mailing=mailingsettings_item)

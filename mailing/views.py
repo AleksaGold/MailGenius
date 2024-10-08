@@ -1,4 +1,6 @@
 from datetime import timedelta
+
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
 from django.urls import reverse_lazy
@@ -93,3 +95,10 @@ class LogListView(ListView):
     model = Log
     paginate_by = 9
     ordering = ["-created_at"]
+
+
+def mailing_log_list(request, pk):
+    """Контроллер для просмотра логов одной рассылки"""
+    logs = Log.objects.filter(mailing_id=pk)
+    context = {"logs": logs}
+    return render(request, "mailing/mailing_log_list.html", context)

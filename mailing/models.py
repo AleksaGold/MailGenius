@@ -51,12 +51,13 @@ class MailingSettings(models.Model):
     )
 
     end_on = models.DateTimeField(
-        auto_now=False, verbose_name="Дата и время окончания рассылки", **NULLABLE
+        auto_now=False, verbose_name="Дата и время окончания рассылки"
     )
 
     frequency = models.CharField(
         max_length=10, choices=FREQUENCY_CHOICES, verbose_name="Периодичность"
     )
+
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
@@ -94,8 +95,11 @@ class Log(models.Model):
     response = models.TextField(
         default="Ответ не получен", verbose_name="ответ почтового сервера"
     )
-    mailing_id = models.ForeignKey(
-        MailingSettings, on_delete=models.CASCADE, verbose_name="id_рассылки"
+    mailing = models.ForeignKey(
+        MailingSettings,
+        on_delete=models.CASCADE,
+        verbose_name="id_рассылки",
+        related_name="mailing_settings",
     )
 
     def __str__(self):
