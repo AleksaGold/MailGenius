@@ -14,7 +14,9 @@ class Client(models.Model):
 
     comment = models.TextField(verbose_name="Комментарий", **NULLABLE)
 
-    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE)
+    owner = models.ForeignKey(
+        User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE
+    )
 
     def __str__(self):
         return f"{self.last_name} {self.first_name} ({self.email})"

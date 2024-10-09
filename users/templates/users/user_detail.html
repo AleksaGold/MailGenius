@@ -1,0 +1,29 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row mt-4 mb-2">
+        <div class="col-6">
+            <form class="row" enctype="multipart/form-data">
+                <div class="card">
+                    {{ form | crispy }}
+                    <div class="card-header">
+                        <h5 class="card-text"> Пользователь:
+                        </h5>
+                        <div class="card-body">
+                            <p class="card-text"> Email: {{ object.email }} </p>
+                            <p class="card-text"> is_authenticated: {{ object.is_authenticated }} </p>
+                            <p class="card-text"> is_active: {{ object.is_active }} </p>
+                            <p class="card-text"> is_staff: {{ object.is_staff }} </p>
+                            <p class="card-text"> is_superuser: {{ object.is_superuser }} </p>
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'users:user_update' object.pk %}" role="button">Блокировать пользователя</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

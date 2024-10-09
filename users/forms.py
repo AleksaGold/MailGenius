@@ -1,4 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from users.models import User
 
@@ -11,3 +12,14 @@ class UserRegisterForm(UserCreationForm):
             "password1",
             "password2",
         )
+
+
+class UserManagerForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ("is_active",)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["password"].widget = forms.HiddenInput()

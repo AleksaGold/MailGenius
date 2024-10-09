@@ -9,9 +9,15 @@
             <div class="row g-0 border rounded overflow-hidden mt-4 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
                 <form class="col p-4 d-flex flex-column position-static">
                     {{ form | crispy }}
-                    <h4 class="card-text"> ID Рассылки: {{ object.pk }} </h4>
-                    <p class="card-text"> Дата и время начала рассылки: {{ object.start_from }} </p>
-                    <p class="card-text"> Статус рассылки: {{ object.get_status_display }} </p>
+                    <h5 class="card-text"> ID Рассылки: {{ object.pk }} </h5>
+                    <h6 class="card-text"> Статус рассылки: {{ object.get_status_display }} </h6>
+                    <p class="card-text"> Начало рассылки: {{ object.start_from }} </p>
+                    {% if object.status == "created" %}
+                    <p class="card-text"> Следующая рассылки: {{ object.next_sending }} </p>
+                    {% endif %}
+                    {% if object.status == "completed" %}
+                    <p class="card-text"> Окончание рассылки: {{ object.end_on }} </p>
+                    {% endif %}
                     <p class="card-text"> Периодичность рассылки: {{ object.get_frequency_display }} </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">

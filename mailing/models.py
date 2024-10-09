@@ -14,7 +14,9 @@ class Message(models.Model):
     subject = models.CharField(max_length=250, verbose_name="тема письма")
     body = models.TextField(verbose_name="тело письма")
 
-    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE)
+    owner = models.ForeignKey(
+        User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE
+    )
 
     def __str__(self):
         return f"Тема письма: {self.subject}"
@@ -75,7 +77,13 @@ class MailingSettings(models.Model):
         Message, on_delete=models.CASCADE, verbose_name="сообщение", **NULLABLE
     )
 
-    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Владелец", **NULLABLE, related_name="user")
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        verbose_name="Владелец",
+        **NULLABLE,
+        related_name="user",
+    )
 
     def __str__(self):
         return (
@@ -86,6 +94,9 @@ class MailingSettings(models.Model):
     class Meta:
         verbose_name = "Настройка рассылки"
         verbose_name_plural = "Настройки рассылок"
+        permissions = [
+            ("can_change_status", "Can change status"),
+        ]
 
 
 class Log(models.Model):

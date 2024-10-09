@@ -23,13 +23,20 @@
                                 {{ client.email }}
                                 {% endfor %} </p>
                             <p class="card-text"> Тема письма для рассылки: {{ object.message.subject }} </p>
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{% url 'mailing:mailing_update' object.pk %}" role="button">Редактировать рассылку</a>
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{% url 'mailing:mailing_delete' object.pk %}" role="button">Удалить
-                                    рассылку</a>
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{% url 'mailing:mailing_log' object.pk %}" role="button">Логи рассылки</a>
+                            {% if perms.mailing.change_mailingsettings %}
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'mailing:mailing_update' object.pk %}" role="button">Редактировать
+                                рассылку</a>
+                            {% endif %}
+                            {% if perms.mailing.delete_mailingsettings %}
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'mailing:mailing_delete' object.pk %}" role="button">Удалить
+                                рассылку</a>
+                            {% endif %}
+                            {% if perms.mailing.view_log %}
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'mailing:mailing_log' object.pk %}" role="button">Логи рассылки</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

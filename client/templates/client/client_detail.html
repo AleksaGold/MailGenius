@@ -20,12 +20,16 @@
                                 {% if object.comment %}
                                 {{ object.comment | truncatechars:100 }}
                                 {% endif %} </p>
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{% url 'client:client_update' object.pk %}" role="button">Редактировать
-                                    клиента</a>
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{% url 'client:client_delete' object.pk %}" role="button">Удалить
-                                    клиента</a>
+                            {% if perms.client.change_client %}
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'client:client_update' object.pk %}" role="button">Редактировать
+                                клиента</a>
+                            {% endif %}
+                            {% if perms.client.delete_client %}
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'client:client_delete' object.pk %}" role="button">Удалить
+                                клиента</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

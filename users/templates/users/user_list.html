@@ -9,13 +9,14 @@
             <div class="row g-0 border rounded overflow-hidden mt-4 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
                 <form class="col p-4 d-flex flex-column position-static">
                     {{ form | crispy }}
-                    <h5 class="card-text"> Тема письма: {{ object.subject }} </h5>
-                    <p class="card-text"> Тело письма: {{ object.body | truncatechars:100 }} </p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
+                    <h5 class="card-text"> Пользователь:
+                        </h5>
+                    <p class="card-text"> Email: {{ object.email }} </p>
+                    <div class="btn-group">
                             <a class="btn btn-sm btn-outline-secondary"
-                               href="{% url 'mailing:message_detail' object.pk %}" role="button">Подробнее</a>
+                               href="{% url 'users:user_detail' object.pk %}" role="button">Подробнее</a>
                         </div>
+                    <div class="d-flex justify-content-between align-items-center">
                     </div>
                 </form>
             </div>

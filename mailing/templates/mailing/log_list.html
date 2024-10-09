@@ -10,8 +10,8 @@
             <div class="row g-0 border rounded overflow-hidden mt-4 position-relative">
                 <form class="col p-4 d-flex flex-column position-static">
                     {{ form | crispy }}
-                    <h4 class="card-text"> ID Лога: {{ object.pk }} </h4>
-                    <p class="card-text"> ID Рассылки: {{ object.mailing.pk }} </p>
+                    <h5 class="card-text"> ID Лога: {{ object.pk }} </h5>
+                    <h6 class="card-text"> ID Рассылки: {{ object.mailing.pk }} </h6>
                     <p class="card-text"> Дата и время попытки: {{ object.created_at }} </p>
                     <p class="card-text"> Ответ почтового сервера: {{ object.response }} </p>
 
