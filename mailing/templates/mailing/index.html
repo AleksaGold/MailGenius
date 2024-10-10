@@ -9,7 +9,7 @@
         <div class="h-100 p-5 text-white bg-dark rounded-3">
           <h2>Рассылки</h2>
           <p>В этом разделе вы можете создавать новые рассылки и управлять рассылками созданными ранее.</p>
-          {% if perms.mailing.add_mailingsettings %}
+          {% if user.is_authenticated %}
           <a href="{% url 'mailing:mailing_create' %}" class="btn btn-outline-light" type="button">
             Сделать настройки для рассылки
           </a>
@@ -23,7 +23,7 @@
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>Сообщения</h2>
           <p>В этом разделе вы можете создавать новые сообщения и управлять сообщениями созданными ранее.</p>
-          {% if perms.mailing.add_message %}
+          {% if user.is_authenticated %}
           <a href="{% url 'mailing:message_create' %}" class="btn btn-outline-secondary" type="button">
             Создать сообщение
           </a>
@@ -37,7 +37,7 @@
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>Клиенты</h2>
           <p>Здесь вы можете создавать новых клиентов для рассылки и редактировать клиентов внесенных в нашу базу данных.</p>
-          {% if perms.client.add_client %}
+          {% if user.is_authenticated %}
           <a href="{% url 'client:client_create' %}" class="btn btn-outline-secondary" type="button">
             Создать нового клиента
           </a>

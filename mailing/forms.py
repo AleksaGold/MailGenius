@@ -1,6 +1,6 @@
 from django.forms import BooleanField, ModelMultipleChoiceField
 
-
+from client.models import Client
 from mailing.models import MailingSettings, Message, Log
 from django import forms
 
@@ -22,6 +22,12 @@ class StyleFormMixin:
 
 
 class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        """Предоставляет доступ в форме, только к клиентам пользователя"""
+
+        self.request = kwargs.pop("request")
+        super(MailingSettingsForm, self).__init__(*args, **kwargs)
+        self.fields["clients"].queryset = Client.objects.filter(owner=self.request.user)
 
     class Meta:
         model = MailingSettings

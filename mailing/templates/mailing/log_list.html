@@ -5,6 +5,7 @@
 
 <div class="row align-items-md-stretch">
     {% for object in object_list %}
+    {% if object.mailing.owner or perms.mailing.view_log %}
     <div class="col-md-4">
         <div class="container">
             <div class="row g-0 border rounded overflow-hidden mt-4 position-relative">
@@ -19,6 +20,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

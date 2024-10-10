@@ -1,7 +1,7 @@
 from datetime import timedelta
 
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.utils import timezone
@@ -27,13 +27,17 @@ class IndexView(TemplateView):
     template_name = "mailing/index.html"
 
 
-class MailingSettingsCreateView(
-    LoginRequiredMixin, PermissionRequiredMixin, CreateView
-):
+class MailingSettingsCreateView(LoginRequiredMixin, CreateView):
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
-    permission_required = "mailing.add_mailingsettings"
+
+    def get_form_kwargs(self):
+        """Переопределение метода для добавления дополнительных аргументов для передачи экземпляру формы"""
+
+        kwargs = super(MailingSettingsCreateView, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def form_valid(self, form):
         """Валидация формы, установка даты следующей отправки сообщения и автоматическая привязка пользователя"""
@@ -57,27 +61,29 @@ class MailingSettingsCreateView(
         return super().form_valid(form)
 
 
-class MailingSettingsDetailView(
-    LoginRequiredMixin, PermissionRequiredMixin, DetailView
-):
+class MailingSettingsDetailView(LoginRequiredMixin, DetailView):
     model = MailingSettings
-    permission_required = "mailing.view_mailingsettings"
+
+    def get_object(self, queryset=None):
+        """Настройка вывода карточек пользователя"""
+        self.object = super().get_object(queryset)
+        if self.request.user == self.object.owner or self.request.user.groups.filter(
+            name="Manager"
+        ):
+            return self.object
+        raise PermissionDenied
 
 
-class MailingSettingsListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class MailingSettingsListView(LoginRequiredMixin, ListView):
     model = MailingSettings
     paginate_by = 9
     ordering = ["id"]
-    permission_required = "mailing.view_mailingsettings"
 
 
-class MailingSettingsUpdateView(
-    LoginRequiredMixin, PermissionRequiredMixin, UpdateView
-):
+class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
-    permission_required = "mailing.change_mailingsettings"
 
     def get_form_class(self):
         user = self.request.user
@@ -88,19 +94,15 @@ class MailingSettingsUpdateView(
         raise PermissionDenied
 
 
-class MailingSettingsDeleteView(
-    LoginRequiredMixin, PermissionRequiredMixin, DeleteView
-):
+class MailingSettingsDeleteView(LoginRequiredMixin, DeleteView):
     model = MailingSettings
     success_url = reverse_lazy("mailing:mailing_list")
-    permission_required = "mailing.delete_mailingsettings"
 
 
-class MessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
-    permission_required = "mailing.add_message"
 
     def form_valid(self, form):
         """Валидация формы и автоматическая привязка пользователя"""
@@ -112,40 +114,43 @@ class MessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
-class MessageDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
-    permission_required = "mailing.view_message"
+
+    def get_object(self, queryset=None):
+        """Настройка вывода карточек пользователя"""
+        self.object = super().get_object(queryset)
+        if self.request.user == self.object.owner or self.request.user.groups.filter(
+            name="Manager"
+        ):
+            return self.object
+        raise PermissionDenied
 
 
-class MessageListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     paginate_by = 9
     ordering = ["subject"]
-    permission_required = "mailing.view_message"
 
 
-class MessageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
-    permission_required = "mailing.change_message"
 
 
-class MessageDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
     success_url = reverse_lazy("mailing:message_list")
-    permission_required = "mailing.delete_message"
 
 
-class LogListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class LogListView(LoginRequiredMixin, ListView):
     model = Log
-    permission_required = "mailing.view_log"
     paginate_by = 9
     ordering = ["-created_at"]
 
 
 @login_required
-@permission_required("mailing.view_log")
 def mailing_log_list(request, pk):
     """Функция для просмотра логов одной рассылки"""
     logs = Log.objects.filter(mailing_id=pk)

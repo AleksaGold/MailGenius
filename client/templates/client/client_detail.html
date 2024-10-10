@@ -20,12 +20,12 @@
                                 {% if object.comment %}
                                 {{ object.comment | truncatechars:100 }}
                                 {% endif %} </p>
-                            {% if perms.client.change_client %}
+                            {% if perms.client.change_client or user == object.owner %}
                             <a class="btn btn-sm btn-outline-secondary"
                                href="{% url 'client:client_update' object.pk %}" role="button">Редактировать
                                 клиента</a>
                             {% endif %}
-                            {% if perms.client.delete_client %}
+                            {% if perms.client.delete_client or user == object.owner %}
                             <a class="btn btn-sm btn-outline-secondary"
                                href="{% url 'client:client_delete' object.pk %}" role="button">Удалить
                                 клиента</a>

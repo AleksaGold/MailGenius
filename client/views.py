@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -12,11 +13,10 @@ from client.forms import ClientForm
 from client.models import Client
 
 
-class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy("client:client_list")
-    permission_required = "client.add_client"
 
     def form_valid(self, form):
         """Валидация формы и автоматическая привязка пользователя"""
@@ -28,26 +28,31 @@ class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ClientDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class ClientDetailView(LoginRequiredMixin, DetailView):
     model = Client
-    permission_required = "client.view_client"
+
+    def get_object(self, queryset=None):
+        """Настройка вывода карточек пользователя"""
+        self.object = super().get_object(queryset)
+        if self.request.user == self.object.owner or self.request.user.groups.filter(
+            name="Manager"
+        ):
+            return self.object
+        raise PermissionDenied
 
 
-class ClientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class ClientListView(LoginRequiredMixin, ListView):
     model = Client
-    permission_required = "client.view_client"
     paginate_by = 9
     ordering = ["last_name"]
 
 
-class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
-    permission_required = "client.change_client"
     success_url = reverse_lazy("client:client_list")
 
 
-class ClientDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class ClientDeleteView(LoginRequiredMixin, DeleteView):
     model = Client
-    permission_required = "client.delete_client"
     success_url = reverse_lazy("client:client_list")

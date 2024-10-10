@@ -4,6 +4,7 @@
 
 <div class="row align-items-md-stretch">
     {% for object in object_list %}
+    {% if user == object.owner or perms.client.view_client%}
     <div class="col-md-4">
         <div class="container">
             <div class="row g-0 border rounded overflow-hidden mt-4 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
@@ -11,9 +12,9 @@
                     {{ form | crispy }}
                     <h5 class="card-text"> Клиент: {{ object.last_name }} {{ object.first_name }}
                         {% if object.patronymic %}
-                            {{ object.patronymic }}
-                            {% endif %}
-                        </h5>
+                        {{ object.patronymic }}
+                        {% endif %}
+                    </h5>
                     <p class="card-text"> Email: {{ object.email }} </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
@@ -25,6 +26,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
