@@ -13,7 +13,7 @@ from users.models import User
 
 
 class UserCreateView(CreateView):
-    """Представление регистрации пользователя"""
+    """Представление для создания нового экземпляра модели User"""
 
     model = User
     form_class = UserRegisterForm
@@ -46,20 +46,24 @@ def email_verification(request, token):
 
 
 class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    """Представление для просмотра списка экземпляров модели User"""
     model = User
     permission_required = "users.view_user"
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
+    """Представление для просмотра экземпляра модели User"""
     model = User
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
+    """Представление для редактирования экземпляра модели User"""
     model = User
     form_class = UserManagerForm
     success_url = reverse_lazy("users:user_list")
 
     def ger_form_class(self):
+        """Проверяет права пользователя на редактирование формы пользователя"""
         user = self.request.user
         if user.has_perm("users.can_change_is_active"):
             return UserManagerForm

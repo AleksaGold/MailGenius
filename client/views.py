@@ -14,6 +14,7 @@ from client.models import Client
 
 
 class ClientCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """Представление для создания нового экземпляра модели Client"""
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy("client:client_list")
@@ -36,6 +37,7 @@ class ClientCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
 class ClientDetailView(LoginRequiredMixin, DetailView):
+    """Представление для просмотра экземпляра модели Client"""
     model = Client
 
     def get_object(self, queryset=None):
@@ -48,6 +50,7 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
 
 class ClientListView(LoginRequiredMixin, ListView):
+    """Представление для просмотра списка экземпляров модели Client"""
     model = Client
     paginate_by = 9
     ordering = ["last_name"]
@@ -61,11 +64,13 @@ class ClientListView(LoginRequiredMixin, ListView):
 
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
+    """Представление для редактирования экземпляра модели Client"""
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy("client:client_list")
 
 
 class ClientDeleteView(LoginRequiredMixin, DeleteView):
+    """Представление для удаления экземпляра модели Client"""
     model = Client
     success_url = reverse_lazy("client:client_list")

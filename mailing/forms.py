@@ -1,29 +1,12 @@
-from django.forms import BooleanField, ModelMultipleChoiceField
-
 from client.models import Client
 from mailing.models import MailingSettings, Message, Log
 from django import forms
 
 
-class StyleFormMixin:
-    """Миксин для стилизации формы"""
-
-    pass
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     for fild_name, field in self.fields.items():
-    #         if isinstance(field, BooleanField):
-    #             field.widget.attrs["class"] = "custom-check-input"
-    #         elif isinstance(field, ModelMultipleChoiceField):
-    #             field.widget.attrs["class"] = "custom-select"
-    #         else:
-    #             field.widget.attrs["class"] = "form-control"
-
-
-class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
+class MailingSettingsForm(forms.ModelForm):
+    """Форма для создания или редактирования экземпляра модели MailingSettings"""
     def __init__(self, *args, **kwargs):
-        """Предоставляет доступ в форме, только к клиентам пользователя"""
+        """Предоставляет доступ в форме настройки рассылки, только к клиентам пользователя"""
 
         self.request = kwargs.pop("request")
         super(MailingSettingsForm, self).__init__(*args, **kwargs)
@@ -42,19 +25,21 @@ class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
 
 
 class MailingSettingsManagerForm(forms.ModelForm):
-
+    """Форма для создания или редактирования экземпляра модели MailingSettings, для пользователя группы manager"""
     class Meta:
         model = MailingSettings
         fields = ("status",)
 
 
-class MessageForm(StyleFormMixin, forms.ModelForm):
+class MessageForm(forms.ModelForm):
+    """Форма для создания или редактирования экземпляра модели Message"""
     class Meta:
         model = Message
         exclude = ("owner",)
 
 
 class LogForm(forms.ModelForm):
+    """Форма для создания или редактирования экземпляра модели Log"""
     class Meta:
         model = Log
         fields = "__all__"

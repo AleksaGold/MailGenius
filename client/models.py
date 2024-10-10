@@ -6,6 +6,7 @@ NULLABLE = {"blank": True, "null": True}
 
 
 class Client(models.Model):
+    """Модель Client для хранения информации о клиентах веб-приложения"""
     last_name = models.CharField(max_length=50, verbose_name="Фамилия")
     first_name = models.CharField(max_length=50, verbose_name="Имя")
     patronymic = models.CharField(max_length=50, verbose_name="Отчество", **NULLABLE)
@@ -19,6 +20,7 @@ class Client(models.Model):
     )
 
     def __str__(self):
+        """Возвращает строковое представление объекта"""
         return f"{self.last_name} {self.first_name} ({self.email})"
 
     class Meta:

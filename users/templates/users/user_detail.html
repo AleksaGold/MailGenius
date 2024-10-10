@@ -10,7 +10,7 @@
                 <div class="card">
                     {{ form | crispy }}
                     <div class="card-header">
-                        <h5 class="card-text"> Пользователь:
+                        <h5 class="card-text"> Пользователь: {{ object.last_name }} {{ object.first_name }}
                         </h5>
                         <div class="card-body">
                             <p class="card-text"> Email: {{ object.email }} </p>

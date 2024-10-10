@@ -4,6 +4,7 @@ NULLABLE = {"blank": True, "null": True}
 
 
 class Blog(models.Model):
+    """Модель Blog для хранения информации о блоге веб-приложения"""
     title = models.CharField(max_length=250, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Содержимое статьи")
     image = models.ImageField(upload_to="blog_images/", verbose_name="Изображение", **NULLABLE)
@@ -12,6 +13,10 @@ class Blog(models.Model):
     published_at = models.DateField(auto_now_add=False, verbose_name="Дата публикации", **NULLABLE)
     is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
 
+    def __str__(self):
+        """Возвращает строковое представление объекта"""
+        return f"{self.title}"
+
     class Meta:
         verbose_name = "Блог"
         verbose_name_plural = "Блоги"
@@ -19,6 +24,3 @@ class Blog(models.Model):
             "created_at",
             "views_count",
         )
-
-    def __str__(self):
-        return f"{self.title}"

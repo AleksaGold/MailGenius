@@ -6,6 +6,7 @@ NULLABLE = {"blank": True, "null": True}
 
 
 class User(AbstractUser):
+    """Модель User для хранения информации о пользователях веб-приложения"""
     username = None
     email = models.EmailField(unique=True, verbose_name="Email")
 
@@ -17,10 +18,11 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
+    def __str__(self):
+        """Возвращает строковое представление объекта"""
+        return self.email
+
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
         permissions = [("can_change_is_active", "Can change is_active")]
-
-    def __str__(self):
-        return self.email

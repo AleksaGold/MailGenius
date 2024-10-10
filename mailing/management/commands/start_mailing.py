@@ -10,6 +10,7 @@ CURRENT_TIME = timezone.now()
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        """Метод для периодической отправки, проверки статуса и установки даты следующей отправки сообщения"""
         all_mails = MailingSettings.objects.all()
 
         for mail in all_mails:

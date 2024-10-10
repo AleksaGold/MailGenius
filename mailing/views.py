@@ -24,17 +24,18 @@ CURRENT_TIME = timezone.now()
 
 
 class IndexView(TemplateView):
+    """Представление главной страницы"""
     template_name = "mailing/index.html"
 
 
 class MailingSettingsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """Представление для создания нового экземпляра модели MailingSettings"""
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
 
     def get_form_kwargs(self):
         """Переопределение метода для добавления дополнительных аргументов для передачи экземпляру формы"""
-
         kwargs = super(MailingSettingsCreateView, self).get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
@@ -69,6 +70,7 @@ class MailingSettingsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateV
 
 
 class MailingSettingsDetailView(LoginRequiredMixin, DetailView):
+    """Представление для просмотра экземпляра модели MailingSettings"""
     model = MailingSettings
 
     def get_object(self, queryset=None):
@@ -80,6 +82,7 @@ class MailingSettingsDetailView(LoginRequiredMixin, DetailView):
 
 
 class MailingSettingsListView(LoginRequiredMixin, ListView):
+    """Представление для просмотра списка экземпляров модели MailingSettings"""
     model = MailingSettings
     paginate_by = 9
     ordering = ["id"]
@@ -93,11 +96,13 @@ class MailingSettingsListView(LoginRequiredMixin, ListView):
 
 
 class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
+    """Представление для редактирования экземпляра модели MailingSettings"""
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
 
     def get_form_class(self):
+        """Проверяет права пользователя на редактирование формы настройки рассылки"""
         user = self.request.user
         if user == self.object.owner or user.is_superuser:
             return MailingSettingsForm
@@ -107,18 +112,19 @@ class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         """Переопределение метода для добавления дополнительных аргументов для передачи экземпляру формы"""
-
         kwargs = super(MailingSettingsUpdateView, self).get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
 
 
 class MailingSettingsDeleteView(LoginRequiredMixin, DeleteView):
+    """Представление для удаления экземпляра модели MailingSettings"""
     model = MailingSettings
     success_url = reverse_lazy("mailing:mailing_list")
 
 
 class MessageCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """Представление для создания нового экземпляра модели Message"""
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
@@ -141,6 +147,7 @@ class MessageCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
+    """Представление для просмотра экземпляра модели Message"""
     model = Message
 
     def get_object(self, queryset=None):
@@ -152,6 +159,7 @@ class MessageDetailView(LoginRequiredMixin, DetailView):
 
 
 class MessageListView(LoginRequiredMixin, ListView):
+    """Представление для просмотра списка экземпляров модели Message"""
     model = Message
     paginate_by = 9
     ordering = ["subject"]
@@ -165,17 +173,20 @@ class MessageListView(LoginRequiredMixin, ListView):
 
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
+    """Представление для редактирования экземпляра модели Message"""
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
 
 
 class MessageDeleteView(LoginRequiredMixin, DeleteView):
+    """Представление для удаления экземпляра модели Message"""
     model = Message
     success_url = reverse_lazy("mailing:message_list")
 
 
 class LogListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    """Представление для просмотра списка экземпляров модели Log"""
     model = Log
     paginate_by = 9
     ordering = ["-created_at"]
@@ -192,7 +203,6 @@ class LogListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         user = self.request.user
         if user.is_superuser or user.groups.filter(name="manager"):
             return Log.objects.all()
-
 
 
 @login_required

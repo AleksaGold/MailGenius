@@ -7,10 +7,7 @@ NULLABLE = {"blank": True, "null": True}
 
 
 class Message(models.Model):
-    """
-    Сообщение для рассылки
-    """
-
+    """Модель Message для хранения информации о сообщениях для рассылок веб-приложения"""
     subject = models.CharField(max_length=250, verbose_name="тема письма")
     body = models.TextField(verbose_name="тело письма")
 
@@ -19,6 +16,7 @@ class Message(models.Model):
     )
 
     def __str__(self):
+        """Возвращает строковое представление объекта"""
         return f"Тема письма: {self.subject}"
 
     class Meta:
@@ -27,10 +25,7 @@ class Message(models.Model):
 
 
 class MailingSettings(models.Model):
-    """
-    Настройки рассылки
-    """
-
+    """Модель MailingSettings для хранения информации о настройках рассылок веб-приложения"""
     ONCE_A_DAY = "daily"
     ONCE_A_WEEK = "weekly"
     ONCE_A_MONTH = "monthly"
@@ -86,6 +81,7 @@ class MailingSettings(models.Model):
     )
 
     def __str__(self):
+        """Возвращает строковое представление объекта"""
         return (
             f"Дата начала: {self.start_from} Периодичность: {self.frequency} Статус рассылки: {self.status} "
             f"Дата следующей рассылки: {self.next_sending}"
@@ -100,10 +96,7 @@ class MailingSettings(models.Model):
 
 
 class Log(models.Model):
-    """
-    Лог рассылки
-    """
-
+    """Модель Log для хранения информации о лога отправки рассылок веб-приложения"""
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="дата и время попытки"
     )
@@ -119,6 +112,7 @@ class Log(models.Model):
     )
 
     def __str__(self):
+        """Возвращает строковое представление объекта"""
         return f" Попытка: {self.pk} Статус попытки отправки: {self.status}"
 
     class Meta:
