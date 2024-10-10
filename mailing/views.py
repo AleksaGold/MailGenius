@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.utils import timezone
@@ -27,7 +27,7 @@ class IndexView(TemplateView):
     template_name = "mailing/index.html"
 
 
-class MailingSettingsCreateView(LoginRequiredMixin, CreateView):
+class MailingSettingsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
@@ -60,6 +60,13 @@ class MailingSettingsCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+    def test_func(self):
+        """Проверка на суперпользователя или менеджера"""
+        user = self.request.user
+        if user.groups.filter(name="manager") or user.groups.filter(name="content_manager"):
+            return False
+        return True
+
 
 class MailingSettingsDetailView(LoginRequiredMixin, DetailView):
     model = MailingSettings
@@ -67,9 +74,7 @@ class MailingSettingsDetailView(LoginRequiredMixin, DetailView):
     def get_object(self, queryset=None):
         """Настройка вывода карточек пользователя"""
         self.object = super().get_object(queryset)
-        if self.request.user == self.object.owner or self.request.user.groups.filter(
-            name="Manager"
-        ):
+        if self.request.user == self.object.owner or self.request.user.groups.filter(name="manager") or self.request.user.is_superuser:
             return self.object
         raise PermissionDenied
 
@@ -78,6 +83,13 @@ class MailingSettingsListView(LoginRequiredMixin, ListView):
     model = MailingSettings
     paginate_by = 9
     ordering = ["id"]
+
+    def get_queryset(self):
+        """Выдача списка сообщений в зависимости от прав доступа пользователя"""
+        user = self.request.user
+        if user.is_superuser or user.groups.filter(name="manager"):
+            return MailingSettings.objects.all()
+        return MailingSettings.objects.filter(owner=user)
 
 
 class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
@@ -93,13 +105,20 @@ class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
             return MailingSettingsManagerForm
         raise PermissionDenied
 
+    def get_form_kwargs(self):
+        """Переопределение метода для добавления дополнительных аргументов для передачи экземпляру формы"""
+
+        kwargs = super(MailingSettingsUpdateView, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
 
 class MailingSettingsDeleteView(LoginRequiredMixin, DeleteView):
     model = MailingSettings
     success_url = reverse_lazy("mailing:mailing_list")
 
 
-class MessageCreateView(LoginRequiredMixin, CreateView):
+class MessageCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
@@ -113,16 +132,21 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+    def test_func(self):
+        """Проверка на суперпользователя или менеджера"""
+        user = self.request.user
+        if user.groups.filter(name="manager") or user.groups.filter(name="content_manager"):
+            return False
+        return True
+
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
 
     def get_object(self, queryset=None):
-        """Настройка вывода карточек пользователя"""
+        """Выдача списка карточки в зависимости от прав доступа пользователя"""
         self.object = super().get_object(queryset)
-        if self.request.user == self.object.owner or self.request.user.groups.filter(
-            name="Manager"
-        ):
+        if self.request.user == self.object.owner or self.request.user.groups.filter(name="manager") or self.request.user.is_superuser:
             return self.object
         raise PermissionDenied
 
@@ -131,6 +155,13 @@ class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     paginate_by = 9
     ordering = ["subject"]
+
+    def get_queryset(self):
+        """Выдача списка сообщений в зависимости от прав доступа пользователя"""
+        user = self.request.user
+        if user.is_superuser or user.groups.filter(name="manager"):
+            return Message.objects.all()
+        return Message.objects.filter(owner=user)
 
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
@@ -144,10 +175,24 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("mailing:message_list")
 
 
-class LogListView(LoginRequiredMixin, ListView):
+class LogListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Log
     paginate_by = 9
     ordering = ["-created_at"]
+
+    def test_func(self):
+        """Проверка на суперпользователя или менеджера"""
+        user = self.request.user
+        if user.is_superuser or user.groups.filter(name="manager"):
+            return True
+        return False
+
+    def get_queryset(self):
+        """Выдача списка логов в зависимости от прав доступа пользователя"""
+        user = self.request.user
+        if user.is_superuser or user.groups.filter(name="manager"):
+            return Log.objects.all()
+
 
 
 @login_required

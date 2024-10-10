@@ -23,11 +23,7 @@ app_name = MailingConfig.name
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
     path("mailing/create/", MailingSettingsCreateView.as_view(), name="mailing_create"),
-    path(
-        "mailing/update/<int:pk>/",
-        MailingSettingsUpdateView.as_view(),
-        name="mailing_update",
-    ),
+    path("mailing/update/<int:pk>/",MailingSettingsUpdateView.as_view(), name="mailing_update",),
     path(
         "mailing/delete/<int:pk>/",
         MailingSettingsDeleteView.as_view(),

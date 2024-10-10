@@ -4,7 +4,6 @@
 
 <div class="row align-items-md-stretch">
     {% for object in object_list %}
-    {% if user == object.owner or perms.client.view_client%}
     <div class="col-md-4">
         <div class="container">
             <div class="row g-0 border rounded overflow-hidden mt-4 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
@@ -26,7 +25,6 @@
             </div>
         </div>
     </div>
-    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

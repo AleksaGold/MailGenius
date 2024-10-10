@@ -47,9 +47,9 @@
                 создавать, отправлять и анализировать рассылки, повышая вовлеченность и лояльность клиентов.</p>
             <center>
                 <a href="{% url 'mailing:index' %}" class="btn btn-outline-secondary">Вернуться на главную страницу</a>
-                <a href="#" class="btn btn-outline-secondary">Перейти в блог</a>
-                {% if perms.users.view_user %}
+                {% if perms.users.view_user or user.is_superuser %}
                 <a href="{% url 'users:user_list' %}" class="btn btn-outline-secondary">Список пользователей</a>
+                <a href="{% url 'mailing:log_list' %}" class="btn btn-outline-secondary">Отчеты по рассылкам</a>
                 {% endif %}
             </center>
         </div>
