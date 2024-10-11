@@ -7,6 +7,7 @@ NULLABLE = {"blank": True, "null": True}
 
 class Client(models.Model):
     """Модель Client для хранения информации о клиентах веб-приложения"""
+
     last_name = models.CharField(max_length=50, verbose_name="Фамилия")
     first_name = models.CharField(max_length=50, verbose_name="Имя")
     patronymic = models.CharField(max_length=50, verbose_name="Отчество", **NULLABLE)

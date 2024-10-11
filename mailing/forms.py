@@ -5,6 +5,7 @@ from django import forms
 
 class MailingSettingsForm(forms.ModelForm):
     """Форма для создания или редактирования экземпляра модели MailingSettings"""
+
     def __init__(self, *args, **kwargs):
         """Предоставляет доступ в форме настройки рассылки, только к клиентам пользователя"""
 
@@ -26,6 +27,7 @@ class MailingSettingsForm(forms.ModelForm):
 
 class MailingSettingsManagerForm(forms.ModelForm):
     """Форма для создания или редактирования экземпляра модели MailingSettings, для пользователя группы manager"""
+
     class Meta:
         model = MailingSettings
         fields = ("status",)
@@ -33,6 +35,7 @@ class MailingSettingsManagerForm(forms.ModelForm):
 
 class MessageForm(forms.ModelForm):
     """Форма для создания или редактирования экземпляра модели Message"""
+
     class Meta:
         model = Message
         exclude = ("owner",)
@@ -40,6 +43,7 @@ class MessageForm(forms.ModelForm):
 
 class LogForm(forms.ModelForm):
     """Форма для создания или редактирования экземпляра модели Log"""
+
     class Meta:
         model = Log
         fields = "__all__"

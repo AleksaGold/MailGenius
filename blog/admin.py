@@ -15,4 +15,3 @@ class BlogAdmin(admin.ModelAdmin):
         "created_at",
         "is_published",
     )
-

@@ -1,0 +1,35 @@
+{% extends 'mailing/base.html' %}
+{% load my_tags %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row mt-4 mb-2">
+        <div class="col-6">
+            <form class="row" enctype="multipart/form-data">
+                <div class="card">
+                    {{ form | crispy }}
+                    <div class="col-auto d-none d-lg-block">
+                        {% if object.image %}
+                        <img class="bd-placeholder-img" width="500" height="250"
+                             src="{{ object.image | media_filter }}"</img>
+                    </div>
+                    {% endif %}
+                    <div class="card-header">
+                        <h3 class="card-title"> {{ object.title }} </h3>
+                        <div class="col-auto d-none d-lg-block">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> {{ object.content }}</p>
+                            <p class="card-text"> Просмотров: {{ object.views_count }} </p>
+
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'blog:blog_list' %}" role="button"> Перейти в блог</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

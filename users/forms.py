@@ -6,6 +6,7 @@ from users.models import User
 
 class UserRegisterForm(UserCreationForm):
     """Форма для создания модели User"""
+
     class Meta:
         model = User
         fields = (
@@ -19,6 +20,7 @@ class UserRegisterForm(UserCreationForm):
 
 class UserManagerForm(UserChangeForm):
     """Форма для создания или редактирования экземпляра модели User, для пользователя группы manager"""
+
     class Meta:
         model = User
         fields = ("is_active",)

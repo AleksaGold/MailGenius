@@ -8,6 +8,7 @@ NULLABLE = {"blank": True, "null": True}
 
 class Message(models.Model):
     """Модель Message для хранения информации о сообщениях для рассылок веб-приложения"""
+
     subject = models.CharField(max_length=250, verbose_name="тема письма")
     body = models.TextField(verbose_name="тело письма")
 
@@ -26,6 +27,7 @@ class Message(models.Model):
 
 class MailingSettings(models.Model):
     """Модель MailingSettings для хранения информации о настройках рассылок веб-приложения"""
+
     ONCE_A_DAY = "daily"
     ONCE_A_WEEK = "weekly"
     ONCE_A_MONTH = "monthly"
@@ -97,6 +99,7 @@ class MailingSettings(models.Model):
 
 class Log(models.Model):
     """Модель Log для хранения информации о лога отправки рассылок веб-приложения"""
+
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="дата и время попытки"
     )
