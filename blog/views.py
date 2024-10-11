@@ -1,6 +1,7 @@
 from django.views.generic import DetailView, ListView
 
 from blog.models import Blog
+from blog.services import get_posts_from_cache
 
 
 class BlogDetailView(DetailView):
@@ -23,6 +24,5 @@ class BlogListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         """Выдача только опубликованных постов"""
-        queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
-        return queryset
+
+        return get_posts_from_cache()
