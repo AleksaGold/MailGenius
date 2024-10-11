@@ -1,6 +1,6 @@
 {% extends 'mailing/base.html' %}
 {% block content %}
-<!doctype html>
+
 
 <main>
 
@@ -8,6 +8,8 @@
       <div class="col-md-6">
         <div class="h-100 p-5 text-white bg-dark rounded-3">
           <h2>Рассылки</h2>
+          <p>Всего рассылок создано - {{ all_mailings }}</p>
+          <p>Из них активных рассылок - {{ active_mailings }}</p>
           <p>В этом разделе вы можете создавать новые рассылки и управлять рассылками созданными ранее.</p>
           {% if user.is_authenticated %}
           <a href="{% url 'mailing:mailing_create' %}" class="btn btn-outline-light" type="button">
@@ -36,6 +38,7 @@
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>Клиенты</h2>
+          <p>Уникальных клиентов - {{ unique_clients }}</p>
           <p>Здесь вы можете создавать новых клиентов для рассылки и редактировать клиентов внесенных в нашу базу данных.</p>
           {% if user.is_authenticated %}
           <a href="{% url 'client:client_create' %}" class="btn btn-outline-secondary" type="button">
@@ -49,10 +52,14 @@
       </div>
       <div class="col-md-6">
         <div class="h-100 p-5 text-white bg-dark rounded-3">
-          <h2>Блог></h2>
-          <p>Здесь можно просмотреть логи по всем рассылкам.</p>
-          <a href="#" class="btn btn-outline-secondary" type="button">
-            Просмотреть отчет
+          <h2>Блог</h2>
+          {% for post in random_posts %}
+              <p>{{ post }} <a href="{% url 'blog:blog_detail' post.pk %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+            Продолжить чтение
+          </a></p>
+          {% endfor %}
+          <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-secondary" type="button">
+            Перейти в блог
           </a>
         </div>
       </div>

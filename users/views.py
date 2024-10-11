@@ -47,17 +47,20 @@ def email_verification(request, token):
 
 class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     """Представление для просмотра списка экземпляров модели User"""
+
     model = User
     permission_required = "users.view_user"
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     """Представление для просмотра экземпляра модели User"""
+
     model = User
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     """Представление для редактирования экземпляра модели User"""
+
     model = User
     form_class = UserManagerForm
     success_url = reverse_lazy("users:user_list")
@@ -68,3 +71,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         if user.has_perm("users.can_change_is_active"):
             return UserManagerForm
         raise PermissionDenied
+
+    def get_success_url(self):
+        """Перенаправление пользователя на страницу объекта после его редактирования"""
+        return reverse("users:user_detail", args=[self.kwargs.get("pk")])

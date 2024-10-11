@@ -1,4 +1,5 @@
 from datetime import timedelta
+import random
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -6,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.utils import timezone
 
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     ListView,
     TemplateView,
@@ -16,6 +17,8 @@ from django.views.generic import (
     DeleteView,
 )
 
+from blog.models import Blog
+from client.models import Client
 from mailing.forms import MailingSettingsForm, MessageForm, MailingSettingsManagerForm
 from mailing.models import MailingSettings, Message, Log
 from mailing.services import send_message_email
@@ -25,11 +28,28 @@ CURRENT_TIME = timezone.now()
 
 class IndexView(TemplateView):
     """Представление главной страницы"""
+
     template_name = "mailing/index.html"
+
+    def get_context_data(self, **kwargs):
+        """Получает дополнительные данные для главной страницы"""
+        context_data = super().get_context_data(**kwargs)
+        context_data["all_mailings"] = MailingSettings.objects.count()
+        context_data["active_mailings"] = MailingSettings.objects.filter(
+            status="created"
+        ).count()
+        context_data["unique_clients"] = (
+            Client.objects.values("email").distinct().count()
+        )
+        context_data["random_posts"] = random.sample(
+            list(Blog.objects.filter(is_published=True)), 3
+        )
+        return context_data
 
 
 class MailingSettingsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Представление для создания нового экземпляра модели MailingSettings"""
+
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
@@ -64,39 +84,53 @@ class MailingSettingsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateV
     def test_func(self):
         """Проверка на суперпользователя или менеджера"""
         user = self.request.user
-        if user.groups.filter(name="manager") or user.groups.filter(name="content_manager"):
+        if user.groups.filter(name="manager") or user.groups.filter(
+            name="content_manager"
+        ):
             return False
         return True
 
 
 class MailingSettingsDetailView(LoginRequiredMixin, DetailView):
     """Представление для просмотра экземпляра модели MailingSettings"""
+
     model = MailingSettings
 
     def get_object(self, queryset=None):
         """Настройка вывода карточек пользователя"""
         self.object = super().get_object(queryset)
-        if self.request.user == self.object.owner or self.request.user.groups.filter(name="manager") or self.request.user.is_superuser:
+        if (
+            self.request.user == self.object.owner
+            or self.request.user.groups.filter(name="manager")
+            or self.request.user.is_superuser
+        ):
             return self.object
         raise PermissionDenied
 
 
 class MailingSettingsListView(LoginRequiredMixin, ListView):
     """Представление для просмотра списка экземпляров модели MailingSettings"""
+
     model = MailingSettings
     paginate_by = 9
     ordering = ["id"]
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         """Выдача списка сообщений в зависимости от прав доступа пользователя"""
         user = self.request.user
         if user.is_superuser or user.groups.filter(name="manager"):
             return MailingSettings.objects.all()
         return MailingSettings.objects.filter(owner=user)
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["number_of_mailing"] = MailingSettings.objects.count()
+        return data
+
 
 class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
     """Представление для редактирования экземпляра модели MailingSettings"""
+
     model = MailingSettings
     form_class = MailingSettingsForm
     success_url = reverse_lazy("mailing:mailing_list")
@@ -116,15 +150,21 @@ class MailingSettingsUpdateView(LoginRequiredMixin, UpdateView):
         kwargs["request"] = self.request
         return kwargs
 
+    def get_success_url(self):
+        """Перенаправление пользователя на страницу объекта после его редактирования"""
+        return reverse("mailing:mailing_detail", args=[self.kwargs.get("pk")])
+
 
 class MailingSettingsDeleteView(LoginRequiredMixin, DeleteView):
     """Представление для удаления экземпляра модели MailingSettings"""
+
     model = MailingSettings
     success_url = reverse_lazy("mailing:mailing_list")
 
 
 class MessageCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Представление для создания нового экземпляра модели Message"""
+
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
@@ -141,25 +181,33 @@ class MessageCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def test_func(self):
         """Проверка на суперпользователя или менеджера"""
         user = self.request.user
-        if user.groups.filter(name="manager") or user.groups.filter(name="content_manager"):
+        if user.groups.filter(name="manager") or user.groups.filter(
+            name="content_manager"
+        ):
             return False
         return True
 
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
     """Представление для просмотра экземпляра модели Message"""
+
     model = Message
 
     def get_object(self, queryset=None):
         """Выдача списка карточки в зависимости от прав доступа пользователя"""
         self.object = super().get_object(queryset)
-        if self.request.user == self.object.owner or self.request.user.groups.filter(name="manager") or self.request.user.is_superuser:
+        if (
+            self.request.user == self.object.owner
+            or self.request.user.groups.filter(name="manager")
+            or self.request.user.is_superuser
+        ):
             return self.object
         raise PermissionDenied
 
 
 class MessageListView(LoginRequiredMixin, ListView):
     """Представление для просмотра списка экземпляров модели Message"""
+
     model = Message
     paginate_by = 9
     ordering = ["subject"]
@@ -174,19 +222,26 @@ class MessageListView(LoginRequiredMixin, ListView):
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
     """Представление для редактирования экземпляра модели Message"""
+
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
 
+    def get_success_url(self):
+        """Перенаправление пользователя на страницу объекта после его редактирования"""
+        return reverse("mailing:message_detail", args=[self.kwargs.get("pk")])
+
 
 class MessageDeleteView(LoginRequiredMixin, DeleteView):
     """Представление для удаления экземпляра модели Message"""
+
     model = Message
     success_url = reverse_lazy("mailing:message_list")
 
 
 class LogListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """Представление для просмотра списка экземпляров модели Log"""
+
     model = Log
     paginate_by = 9
     ordering = ["-created_at"]
