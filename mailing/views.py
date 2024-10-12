@@ -62,11 +62,10 @@ class MailingSettingsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateV
 
     def form_valid(self, form):
         """Валидация формы, установка даты следующей отправки сообщения и автоматическая привязка пользователя"""
-        new_mailing_settings: MailingSettings = form.save()
 
+        new_mailing_settings: MailingSettings = form.save()
         user = self.request.user
         new_mailing_settings.owner = user
-
         if new_mailing_settings.start_from <= CURRENT_TIME:
             send_message_email(new_mailing_settings)
             if new_mailing_settings.frequency == "daily":

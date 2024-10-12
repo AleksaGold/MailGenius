@@ -1,0 +1,833 @@
+[
+  {
+    "model": "mailing.message",
+    "pk": 1,
+    "fields": {
+      "subject": "8 октября",
+      "body": "Привет! Это снова я",
+      "owner": null
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 2,
+    "fields": {
+      "subject": "Тест 1 часть",
+      "body": "Существуют периодические задачи, т. е. такие задачи, которые необходимо выполнять по расписанию. В Linux такие расписания можно задавать с помощью \r\ncrontab\r\n, который отвечает за то, чтобы вызывать задачи по расписанию, которое задается в отдельном файле. Вызывает эта утилита также файл или команду, которую можно вызвать из консоли. Здесь нам пригодятся команды, так как это инструмент фреймворка для вызова через консоль.\r\n\r\nСоздать команду можно с помощью следующих шагов:\r\n\r\nВ приложении добавьте пакет управления \r\nmanagement\r\n\r\nВнутри этого пакета создайте пакет команд \r\ncommands\r\n.\r\nВнутри пакета с командами создайте файл с названием, по которому команда будет вызываться.",
+      "owner": null
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 3,
+    "fields": {
+      "subject": "Тест 2 часть",
+      "body": "Всё больше пользователей веб-сервиса, над которым вы работаете, пользуются реализованной платформой, и администраторы начинают замечать проблемы со скоростью. Проведенное нагрузочное тестирование выявило проблемы, с которыми необходимо разобраться.",
+      "owner": null
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 4,
+    "fields": {
+      "subject": "Письмецо",
+      "body": "Письмецо",
+      "owner": null
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 5,
+    "fields": {
+      "subject": "Owner",
+      "body": "Hi!\r\nIt's owner",
+      "owner": 3
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 6,
+    "fields": {
+      "subject": "Проверка пользователя",
+      "body": "Проверка поля пользователя",
+      "owner": 1
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 7,
+    "fields": {
+      "subject": "coo.coo",
+      "body": "Письмо не о чём",
+      "owner": 2
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 8,
+    "fields": {
+      "subject": "Client",
+      "body": "Test Client",
+      "owner": 1
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 9,
+    "fields": {
+      "subject": "Письмо",
+      "body": "Привет!\r\nВот вам еще одно письмо",
+      "owner": 2
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 10,
+    "fields": {
+      "subject": "Проверка Лёни",
+      "body": "Лёня работает",
+      "owner": 2
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 11,
+    "fields": {
+      "subject": "11 октября",
+      "body": "Тест 11 октября",
+      "owner": 2
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 1,
+    "fields": {
+      "start_from": "2024-10-07T12:13:00Z",
+      "next_sending": "2024-10-12T07:08:28.944Z",
+      "end_on": "2024-10-11T12:13:00Z",
+      "frequency": "daily",
+      "status": "completed",
+      "message": 1,
+      "owner": null,
+      "clients": [
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 2,
+    "fields": {
+      "start_from": "2024-10-05T12:13:00Z",
+      "next_sending": "2024-10-15T07:08:28.944Z",
+      "end_on": "2024-10-10T12:13:00Z",
+      "frequency": "weekly",
+      "status": "completed",
+      "message": 2,
+      "owner": null,
+      "clients": [
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 3,
+    "fields": {
+      "start_from": "2024-10-05T12:15:00Z",
+      "next_sending": "2024-10-08T07:17:06.404Z",
+      "end_on": "2024-10-07T12:16:00Z",
+      "frequency": "daily",
+      "status": "completed",
+      "message": 3,
+      "owner": null,
+      "clients": [
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 4,
+    "fields": {
+      "start_from": "2024-10-06T12:16:00Z",
+      "next_sending": "2024-10-11T07:23:06.404Z",
+      "end_on": "2024-10-10T12:16:00Z",
+      "frequency": "daily",
+      "status": "completed",
+      "message": 4,
+      "owner": null,
+      "clients": [
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 5,
+    "fields": {
+      "start_from": "2024-10-07T20:31:00Z",
+      "next_sending": "2024-10-11T15:30:06.290Z",
+      "end_on": "2024-10-10T20:31:00Z",
+      "frequency": "daily",
+      "status": "completed",
+      "message": 5,
+      "owner": 3,
+      "clients": [
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 6,
+    "fields": {
+      "start_from": "2024-10-04T20:42:00Z",
+      "next_sending": "2024-10-15T15:42:13.826Z",
+      "end_on": "2024-10-25T20:43:00Z",
+      "frequency": "weekly",
+      "status": "created",
+      "message": 6,
+      "owner": 1,
+      "clients": [
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 7,
+    "fields": {
+      "start_from": "2024-10-01T20:45:00Z",
+      "next_sending": "2024-11-07T15:44:28.229Z",
+      "end_on": "2025-10-08T20:45:00Z",
+      "frequency": "monthly",
+      "status": "created",
+      "message": 7,
+      "owner": 2,
+      "clients": [
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 8,
+    "fields": {
+      "start_from": "2024-10-04T20:51:00Z",
+      "next_sending": "2024-10-15T15:50:10.915Z",
+      "end_on": "2024-10-30T20:51:00Z",
+      "frequency": "weekly",
+      "status": "created",
+      "message": 8,
+      "owner": 1,
+      "clients": [
+        22,
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 9,
+    "fields": {
+      "start_from": "2024-09-11T20:53:00Z",
+      "next_sending": "2024-10-11T15:52:21.324Z",
+      "end_on": "2024-10-10T20:53:00Z",
+      "frequency": "daily",
+      "status": "completed",
+      "message": 9,
+      "owner": 2,
+      "clients": [
+        22,
+        19,
+        23
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 10,
+    "fields": {
+      "start_from": "2024-10-09T13:46:00Z",
+      "next_sending": "2024-10-17T13:39:00Z",
+      "end_on": "2024-10-11T13:46:00Z",
+      "frequency": "weekly",
+      "status": "completed",
+      "message": 1,
+      "owner": 2,
+      "clients": [
+        19,
+        23
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 11,
+    "fields": {
+      "start_from": "2024-10-01T10:32:29Z",
+      "next_sending": "2024-10-12T18:41:48Z",
+      "end_on": "2024-10-22T10:32:30Z",
+      "frequency": "daily",
+      "status": "created",
+      "message": 1,
+      "owner": 1,
+      "clients": [
+        22,
+        21,
+        20,
+        19
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 12,
+    "fields": {
+      "start_from": "2024-10-03T15:35:00Z",
+      "next_sending": "2024-10-12T10:33:42.581Z",
+      "end_on": "2024-10-20T15:35:00Z",
+      "frequency": "daily",
+      "status": "created",
+      "message": 3,
+      "owner": 1,
+      "clients": [
+        22
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 13,
+    "fields": {
+      "start_from": "2024-10-10T18:29:00Z",
+      "next_sending": "2024-10-12T12:29:00Z",
+      "end_on": "2024-10-29T18:29:00Z",
+      "frequency": "daily",
+      "status": "created",
+      "message": 9,
+      "owner": 2,
+      "clients": [
+        19,
+        23
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 14,
+    "fields": {
+      "start_from": "2024-10-17T18:32:00Z",
+      "next_sending": "2024-10-17T18:32:00Z",
+      "end_on": "2024-10-24T18:32:00Z",
+      "frequency": "weekly",
+      "status": "created",
+      "message": 1,
+      "owner": 1,
+      "clients": [
+        22,
+        20
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 15,
+    "fields": {
+      "start_from": "2024-10-05T06:32:00Z",
+      "next_sending": "2024-10-11T18:32:47.467Z",
+      "end_on": "2024-10-11T06:32:00Z",
+      "frequency": "weekly",
+      "status": "completed",
+      "message": 1,
+      "owner": 2,
+      "clients": [
+        22
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 16,
+    "fields": {
+      "start_from": "2024-10-10T06:36:00Z",
+      "next_sending": "2024-10-12T06:41:59.556Z",
+      "end_on": "2024-10-15T06:36:00Z",
+      "frequency": "daily",
+      "status": "created",
+      "message": 11,
+      "owner": 2,
+      "clients": [
+        19,
+        23
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 17,
+    "fields": {
+      "start_from": "2024-10-02T12:16:00Z",
+      "next_sending": "2024-10-12T12:15:50.206Z",
+      "end_on": "2024-10-24T12:16:00Z",
+      "frequency": "daily",
+      "status": "created",
+      "message": 5,
+      "owner": 1,
+      "clients": [
+        25
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 18,
+    "fields": {
+      "start_from": "2024-10-11T04:04:00Z",
+      "next_sending": "2024-10-13T04:11:10.091Z",
+      "end_on": "2024-10-20T04:04:00Z",
+      "frequency": "daily",
+      "status": "created",
+      "message": 4,
+      "owner": 1,
+      "clients": [
+        25
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailingsettings",
+    "pk": 19,
+    "fields": {
+      "start_from": "2024-10-12T05:35:00Z",
+      "next_sending": "2024-10-19T05:35:22.784Z",
+      "end_on": "2024-10-13T05:35:00Z",
+      "frequency": "weekly",
+      "status": "created",
+      "message": 10,
+      "owner": 1,
+      "clients": [
+        25
+      ]
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 1,
+    "fields": {
+      "created_at": "2024-10-08T07:13:33.531Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 1
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 2,
+    "fields": {
+      "created_at": "2024-10-08T07:13:57.034Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 2
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 3,
+    "fields": {
+      "created_at": "2024-10-08T07:16:14.030Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 3
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 4,
+    "fields": {
+      "created_at": "2024-10-08T07:16:37.812Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 4
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 5,
+    "fields": {
+      "created_at": "2024-10-08T07:17:32.529Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 4
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 6,
+    "fields": {
+      "created_at": "2024-10-08T07:20:02.167Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 4
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 7,
+    "fields": {
+      "created_at": "2024-10-08T07:22:02.809Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 4
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 8,
+    "fields": {
+      "created_at": "2024-10-08T07:24:02.645Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 4
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 9,
+    "fields": {
+      "created_at": "2024-10-08T15:31:44.101Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 5
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 10,
+    "fields": {
+      "created_at": "2024-10-08T15:43:32.899Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 6
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 11,
+    "fields": {
+      "created_at": "2024-10-08T15:45:48.494Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 7
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 12,
+    "fields": {
+      "created_at": "2024-10-08T15:51:32.769Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 8
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 13,
+    "fields": {
+      "created_at": "2024-10-08T15:53:56.818Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 9
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 14,
+    "fields": {
+      "created_at": "2024-10-09T07:09:03.158Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 1
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 15,
+    "fields": {
+      "created_at": "2024-10-09T07:24:03.126Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 4
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 16,
+    "fields": {
+      "created_at": "2024-10-09T16:16:02.639Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 5
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 17,
+    "fields": {
+      "created_at": "2024-10-09T17:27:21.376Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 9
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 18,
+    "fields": {
+      "created_at": "2024-10-10T07:09:03.490Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 1
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 19,
+    "fields": {
+      "created_at": "2024-10-10T07:24:03.738Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 4
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 20,
+    "fields": {
+      "created_at": "2024-10-10T10:35:19.642Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 12
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 21,
+    "fields": {
+      "created_at": "2024-10-10T18:34:25.338Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 15
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 22,
+    "fields": {
+      "created_at": "2024-10-10T18:38:02.775Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 13
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 23,
+    "fields": {
+      "created_at": "2024-10-10T18:42:02.680Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 11
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 24,
+    "fields": {
+      "created_at": "2024-10-10T18:42:04.214Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 5
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 25,
+    "fields": {
+      "created_at": "2024-10-10T18:42:05.638Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 9
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 26,
+    "fields": {
+      "created_at": "2024-10-10T18:42:06.803Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 10
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 27,
+    "fields": {
+      "created_at": "2024-10-11T06:37:06.307Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 16
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 28,
+    "fields": {
+      "created_at": "2024-10-11T06:38:03.073Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 16
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 29,
+    "fields": {
+      "created_at": "2024-10-11T06:40:02.369Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 16
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 30,
+    "fields": {
+      "created_at": "2024-10-11T06:42:02.711Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 16
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 31,
+    "fields": {
+      "created_at": "2024-10-11T07:09:03.120Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 1
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 32,
+    "fields": {
+      "created_at": "2024-10-11T10:34:02.424Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 12
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 33,
+    "fields": {
+      "created_at": "2024-10-11T12:16:22.190Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 17
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 34,
+    "fields": {
+      "created_at": "2024-10-11T15:46:22.749Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 13
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 35,
+    "fields": {
+      "created_at": "2024-10-12T01:09:20.584Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 11
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 36,
+    "fields": {
+      "created_at": "2024-10-12T04:04:49.175Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 18
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 37,
+    "fields": {
+      "created_at": "2024-10-12T04:10:02.656Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 18
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 38,
+    "fields": {
+      "created_at": "2024-10-12T04:15:01.794Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 18
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 39,
+    "fields": {
+      "created_at": "2024-10-12T05:25:02.828Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 18
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 40,
+    "fields": {
+      "created_at": "2024-10-12T05:30:02.112Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 18
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 41,
+    "fields": {
+      "created_at": "2024-10-12T05:35:51.624Z",
+      "status": true,
+      "response": "Рассылка прошла успешно",
+      "mailing": 19
+    }
+  }
+]

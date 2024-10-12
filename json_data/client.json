@@ -1,0 +1,86 @@
+[
+  {
+    "model": "client.client",
+    "pk": 19,
+    "fields": {
+      "last_name": "Питон",
+      "first_name": "Александр",
+      "patronymic": null,
+      "email": "alex.gold.python@yandex.kz",
+      "comment": "",
+      "owner": 2
+    }
+  },
+  {
+    "model": "client.client",
+    "pk": 20,
+    "fields": {
+      "last_name": "Красивый",
+      "first_name": "Леонид",
+      "patronymic": "Петрович",
+      "email": "leonid@coo.coo",
+      "comment": "",
+      "owner": 1
+    }
+  },
+  {
+    "model": "client.client",
+    "pk": 21,
+    "fields": {
+      "last_name": "Голдобина",
+      "first_name": "Александра",
+      "patronymic": "Александровна",
+      "email": "goldobina.s@gmail.com",
+      "comment": "",
+      "owner": 3
+    }
+  },
+  {
+    "model": "client.client",
+    "pk": 22,
+    "fields": {
+      "last_name": "Cron",
+      "first_name": "Crony",
+      "patronymic": null,
+      "email": "cron@cron.cron",
+      "comment": "",
+      "owner": 1
+    }
+  },
+  {
+    "model": "client.client",
+    "pk": 23,
+    "fields": {
+      "last_name": "Иванов",
+      "first_name": "Иван",
+      "patronymic": "Алексеевич",
+      "email": "ivan@ivan.ivan",
+      "comment": "",
+      "owner": 2
+    }
+  },
+  {
+    "model": "client.client",
+    "pk": 25,
+    "fields": {
+      "last_name": "Новенький",
+      "first_name": "Алексей",
+      "patronymic": null,
+      "email": "alex.gold.python@yandex.kz",
+      "comment": "",
+      "owner": 1
+    }
+  },
+  {
+    "model": "client.client",
+    "pk": 26,
+    "fields": {
+      "last_name": "Cron",
+      "first_name": "Crony",
+      "patronymic": null,
+      "email": "cron@cron.cron",
+      "comment": "",
+      "owner": 1
+    }
+  }
+]

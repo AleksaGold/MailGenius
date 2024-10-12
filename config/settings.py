@@ -136,7 +136,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
-CRONJOBS = [("* * * * *", "mailing.cron.get_mails_to_send")]
+CRONJOBS = [("*/5 * * * *", "mailing.services.get_mails_to_send")]
 
 AUTH_USER_MODEL = "users.User"
 
