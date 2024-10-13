@@ -1,8 +1,12 @@
 import smtplib
+import random
 
 from django.conf import settings
+from django.core.cache import cache
 from django.core.mail import send_mail
 
+from blog.models import Blog
+from client.models import Client
 from mailing.models import MailingSettings, Log
 
 from datetime import timedelta
@@ -48,3 +52,22 @@ def get_mails_to_send():
                 else:
                     mail.next_sending += timedelta(days=30)
             mail.save()
+
+
+def get_context_data_from_cache(context_data):
+    """Получает дополнительные данные для главной страницы из кэша, если кэш пустой получает данные из БД"""
+
+    data_for_cache = {
+        "all_mailings": MailingSettings.objects.count(),
+        "active_mailings": MailingSettings.objects.filter(status="created").count(),
+        "unique_clients": Client.objects.values("email").distinct().count()
+    }
+    key = "index_context"
+    cached_data = cache.get(key)
+    if cached_data is None:
+        cache.set(key, data_for_cache)
+    context_data.update(cached_data)
+    context_data["random_posts"] = random.sample(
+        list(Blog.objects.filter(is_published=True)), 3
+    )
+    return context_data

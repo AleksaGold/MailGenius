@@ -13,9 +13,9 @@ def get_user_object(request, queryset=None):
     """Настройка вывода карточек пользователя"""
     request.object = queryset
     if (
-            request.user == request.object.owner
-            or request.user.groups.filter(name="manager")
-            or request.user.is_superuser
+        request.user == request.object.owner
+        or request.user.groups.filter(name="manager")
+        or request.user.is_superuser
     ):
         return request.object
     raise PermissionDenied
@@ -24,8 +24,6 @@ def get_user_object(request, queryset=None):
 def user_test_func(request):
     """Проверка на суперпользователя или менеджера"""
     user = request.user
-    if user.groups.filter(name="manager") or user.groups.filter(
-            name="content_manager"
-    ):
+    if user.groups.filter(name="manager") or user.groups.filter(name="content_manager"):
         return False
     return True

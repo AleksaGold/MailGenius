@@ -1,5 +1,4 @@
 from datetime import timedelta
-import random
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -18,11 +17,9 @@ from django.views.generic import (
 )
 
 from base.services import user_test_func, get_user_object, get_user_queryset
-from blog.models import Blog
-from client.models import Client
 from mailing.forms import MailingSettingsForm, MessageForm, MailingSettingsManagerForm
 from mailing.models import MailingSettings, Message, Log
-from mailing.services import send_message_email
+from mailing.services import send_message_email, get_context_data_from_cache
 
 CURRENT_TIME = timezone.now()
 
@@ -34,18 +31,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         """Получает дополнительные данные для главной страницы"""
-        context_data = super().get_context_data(**kwargs)
-        context_data["all_mailings"] = MailingSettings.objects.count()
-        context_data["active_mailings"] = MailingSettings.objects.filter(
-            status="created"
-        ).count()
-        context_data["unique_clients"] = (
-            Client.objects.values("email").distinct().count()
-        )
-        context_data["random_posts"] = random.sample(
-            list(Blog.objects.filter(is_published=True)), 3
-        )
-        return context_data
+        return get_context_data_from_cache(super().get_context_data(**kwargs))
 
 
 class MailingSettingsCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
