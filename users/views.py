@@ -68,7 +68,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def ger_form_class(self):
         """Проверяет права пользователя на редактирование формы пользователя"""
         user = self.request.user
-        if user.has_perm("users.can_change_is_active"):
+        if user.has_perm("users.can_change_is_active") or user.is_superuser:
             return UserManagerForm
         raise PermissionDenied
 

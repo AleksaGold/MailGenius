@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     CreateView,
@@ -9,6 +8,7 @@ from django.views.generic import (
     DeleteView,
 )
 
+from base.services import user_test_func, get_user_object, get_user_queryset
 from client.forms import ClientForm
 from client.models import Client
 
@@ -31,12 +31,7 @@ class ClientCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         """Проверка на суперпользователя или менеджера"""
-        user = self.request.user
-        if user.groups.filter(name="manager") or user.groups.filter(
-            name="content_manager"
-        ):
-            return False
-        return True
+        return user_test_func(self.request)
 
 
 class ClientDetailView(LoginRequiredMixin, DetailView):
@@ -45,15 +40,8 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     model = Client
 
     def get_object(self, queryset=None):
-        """Выдача списка карточки в зависимости от прав доступа пользователя"""
-        self.object = super().get_object(queryset)
-        if (
-            self.request.user == self.object.owner
-            or self.request.user.groups.filter(name="manager")
-            or self.request.user.is_superuser
-        ):
-            return self.object
-        raise PermissionDenied
+        """Выдает объект в зависимости от прав доступа пользователя"""
+        return get_user_object(self.request, super().get_object(queryset))
 
 
 class ClientListView(LoginRequiredMixin, ListView):
@@ -64,11 +52,8 @@ class ClientListView(LoginRequiredMixin, ListView):
     ordering = ["last_name"]
 
     def get_queryset(self):
-        """Выдача списка сообщений в зависимости от прав доступа пользователя"""
-        user = self.request.user
-        if user.is_superuser or user.groups.filter(name="manager"):
-            return Client.objects.all()
-        return Client.objects.filter(owner=user)
+        """Выдает список объектов в зависимости от прав доступа пользователя"""
+        return get_user_queryset(self.request, self.model.objects.all())
 
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
