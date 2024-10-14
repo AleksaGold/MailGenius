@@ -68,9 +68,10 @@ def get_context_data_from_cache(context_data):
     if cached_data is None:
         cache.set(key, data_for_cache)
     context_data.update(cached_data)
-    context_data["random_posts"] = random.sample(
-        list(Blog.objects.filter(is_published=True)), 3
-    )
+    if Blog.objects.exists():
+        context_data["random_posts"] = random.sample(
+            list(Blog.objects.filter(is_published=True)), 3
+        )
     return context_data
 
 
