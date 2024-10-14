@@ -8,7 +8,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from base.services import user_test_func, get_user_object, get_user_queryset
+from mailing.services import user_test_func, get_user_object, get_user_queryset
 from client.forms import ClientForm
 from client.models import Client
 

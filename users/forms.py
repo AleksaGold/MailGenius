@@ -18,6 +18,19 @@ class UserRegisterForm(UserCreationForm):
         )
 
 
+class UserProfileForm(UserChangeForm):
+    """Форма для редактирования экземпляра модели User"""
+
+    class Meta:
+        model = User
+        fields = ("email", "last_name", "first_name", "avatar")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["password"].widget = forms.HiddenInput()
+
+
 class UserManagerForm(UserChangeForm):
     """Форма для создания или редактирования экземпляра модели User, для пользователя группы manager"""
 

@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "users",
     "blog",
-    "base",
 ]
 
 MIDDLEWARE = [

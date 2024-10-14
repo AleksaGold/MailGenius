@@ -7,7 +7,7 @@ from users.views import (
     email_verification,
     UserListView,
     UserUpdateView,
-    UserDetailView,
+    UserDetailView, UserProfileUpdateView,
 )
 
 app_name = UsersConfig.name
@@ -21,4 +21,5 @@ urlpatterns = [
     path("list/", UserListView.as_view(), name="user_list"),
     path("detail/<int:pk>/", UserDetailView.as_view(), name="user_detail"),
     path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
+    path("profile/", UserProfileUpdateView.as_view(template_name="profile.html"), name="profile"),
 ]

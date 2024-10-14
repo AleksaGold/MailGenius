@@ -16,10 +16,15 @@ from django.views.generic import (
     DeleteView,
 )
 
-from base.services import user_test_func, get_user_object, get_user_queryset
 from mailing.forms import MailingSettingsForm, MessageForm, MailingSettingsManagerForm
 from mailing.models import MailingSettings, Message, Log
-from mailing.services import send_message_email, get_context_data_from_cache
+from mailing.services import (
+    send_message_email,
+    get_context_data_from_cache,
+    user_test_func,
+    get_user_object,
+    get_user_queryset,
+)
 
 CURRENT_TIME = timezone.now()
 

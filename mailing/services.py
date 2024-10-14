@@ -3,6 +3,7 @@ import random
 
 from django.conf import settings
 from django.core.cache import cache
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 
 from blog.models import Blog
@@ -60,7 +61,7 @@ def get_context_data_from_cache(context_data):
     data_for_cache = {
         "all_mailings": MailingSettings.objects.count(),
         "active_mailings": MailingSettings.objects.filter(status="created").count(),
-        "unique_clients": Client.objects.values("email").distinct().count()
+        "unique_clients": Client.objects.values("email").distinct().count(),
     }
     key = "index_context"
     cached_data = cache.get(key)
@@ -71,3 +72,31 @@ def get_context_data_from_cache(context_data):
         list(Blog.objects.filter(is_published=True)), 3
     )
     return context_data
+
+
+def get_user_queryset(request, queryset):
+    """Функция выдачи списка объектов в зависимости от прав доступа пользователя (ListView)"""
+    user = request.user
+    if user.is_superuser or user.groups.filter(name="manager"):
+        return queryset
+    return queryset.filter(owner=user)
+
+
+def get_user_object(request, queryset=None):
+    """Настройка вывода карточек пользователя"""
+    request.object = queryset
+    if (
+        request.user == request.object.owner
+        or request.user.groups.filter(name="manager")
+        or request.user.is_superuser
+    ):
+        return request.object
+    raise PermissionDenied
+
+
+def user_test_func(request):
+    """Проверка на суперпользователя или менеджера"""
+    user = request.user
+    if user.groups.filter(name="manager") or user.groups.filter(name="content_manager"):
+        return False
+    return True
