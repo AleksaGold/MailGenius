@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DetailView
 
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm, UserManagerForm
+from users.forms import UserRegisterForm, UserManagerForm, UserProfileForm
 from users.models import User
 
 
@@ -65,13 +65,23 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserManagerForm
     success_url = reverse_lazy("users:user_list")
 
-    def ger_form_class(self):
+    def get_form_class(self):
         """Проверяет права пользователя на редактирование формы пользователя"""
         user = self.request.user
-        if user.has_perm("users.can_change_is_active"):
+        if user.has_perm("users.can_change_is_active") or user.is_superuser:
             return UserManagerForm
         raise PermissionDenied
 
     def get_success_url(self):
         """Перенаправление пользователя на страницу объекта после его редактирования"""
         return reverse("users:user_detail", args=[self.kwargs.get("pk")])
+
+
+class UserProfileUpdateView(UpdateView):
+    model = User
+    form_class = UserProfileForm
+    success_url = reverse_lazy("mailing:index")
+
+    def get_object(self, queryset=None):
+        """Извлекает экземпляр модели User текущего пользователя"""
+        return self.request.user

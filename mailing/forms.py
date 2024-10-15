@@ -28,6 +28,13 @@ class MailingSettingsForm(forms.ModelForm):
 class MailingSettingsManagerForm(forms.ModelForm):
     """Форма для создания или редактирования экземпляра модели MailingSettings, для пользователя группы manager"""
 
+    def __init__(self, *args, **kwargs):
+        """Переопределение метода __init__ в форме менеджера, для корректной работы формы пользователя
+        при выборе клиентов пользователя"""
+
+        self.request = kwargs.pop("request")
+        super(MailingSettingsManagerForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = MailingSettings
         fields = ("status",)

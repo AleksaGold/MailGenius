@@ -23,11 +23,9 @@
                                 {{ client.email }}
                                 {% endfor %} </p>
                             <p class="card-text"> Тема письма для рассылки: {{ object.message.subject }} </p>
-                            {% if user.is_superuser or user == object.owner %}
                             <a class="btn btn-sm btn-outline-secondary"
                                href="{% url 'mailing:mailing_update' object.pk %}" role="button">Редактировать
                                 рассылку</a>
-                            {% endif %}
                             {% if user.is_superuser or user == object.owner %}
                             <a class="btn btn-sm btn-outline-secondary"
                                href="{% url 'mailing:mailing_delete' object.pk %}" role="button">Удалить
